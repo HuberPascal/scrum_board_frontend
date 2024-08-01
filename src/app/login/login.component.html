@@ -1,0 +1,19 @@
+<form (ngSubmit)="loginWithUsernameAndPassword()">
+  <input
+    type="text"
+    name="username"
+    [(ngModel)]="username"
+    placeholder="username"
+    [disabled]="isSubmitting"
+    required
+  />
+  <input
+    type="password"
+    name="password"
+    [(ngModel)]="password"
+    placeholder="password"
+    [disabled]="isSubmitting"
+    required
+  />
+  <button>Login</button>
+</form>
