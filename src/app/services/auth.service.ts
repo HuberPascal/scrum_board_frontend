@@ -3,6 +3,12 @@ import { environment } from '../../environments/environment';
 import { lastValueFrom } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
+interface AuthResponse {
+  token: string;
+  user_id: number;
+  email: string;
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -19,11 +25,12 @@ export class AuthService {
   }
 
   public loginWithUsernameAndPassword(username: string, password: string) {
-    const url = environment.baseUrl + '/login/';
+    const url = 'http://127.0.0.1:8000/login/';
     const body = {
       username: username,
       password: password,
     };
-    return lastValueFrom(this.http.post(url, body));
+    // Typisieren der POST-Anfrage mit AuthResponse
+    return lastValueFrom(this.http.post<AuthResponse>(url, body));
   }
 }

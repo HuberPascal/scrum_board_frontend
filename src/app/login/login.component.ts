@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -14,7 +15,7 @@ export class LoginComponent {
   password: string = '';
   isSubmitting: boolean = false;
 
-  constructor(private as: AuthService) {}
+  constructor(private as: AuthService, private router: Router) {}
 
   async login() {
     this.isSubmitting = true;
@@ -23,9 +24,13 @@ export class LoginComponent {
         this.username,
         this.password
       );
-      console.log(response);
+      console.log('response ist:', response.token);
+
+      if (response && response.token) {
+        localStorage.setItem('authToken', response.token);
+        this.router.navigateByUrl('/board');
+      }
       this.isSubmitting = false;
-      // redirect
     } catch (error) {
       console.error(error);
       this.isSubmitting = false;
