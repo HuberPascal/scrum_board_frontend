@@ -3,32 +3,28 @@ import { FormsModule } from '@angular/forms';
 import { AuthService } from '../services/auth.service';
 
 @Component({
-  selector: 'app-login',
+  selector: 'app-register',
   standalone: true,
   imports: [FormsModule],
-  templateUrl: './login.component.html',
-  styleUrl: './login.component.scss',
+  templateUrl: './register.component.html',
+  styleUrl: './register.component.scss',
 })
-export class LoginComponent {
+export class RegisterComponent {
   username: string = '';
   password: string = '';
-  isSubmitting: boolean = false;
 
   constructor(private as: AuthService) {}
 
-  async login() {
-    this.isSubmitting = true;
+  async register() {
     try {
-      let response = await this.as.loginWithUsernameAndPassword(
+      let resp = await this.as.registerWithUsernameAndPassword(
         this.username,
         this.password
       );
-      console.log(response);
-      this.isSubmitting = false;
+      console.log(resp);
       // redirect
     } catch (error) {
       console.error(error);
-      this.isSubmitting = false;
     }
   }
 }

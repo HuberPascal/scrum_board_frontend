@@ -1,0 +1,12 @@
+<h1>Board</h1>
+
+<div>
+  @for(task of tasks; track task) {
+  <p>Titel: {{ task.title }}</p>
+  <p>Description: {{ task.description }}</p>
+  }
+</div>
+
+<div class="example-button-row">
+  <button mat-button (click)="openDialogAdProduct()">Task erstellen</button>
+</div>

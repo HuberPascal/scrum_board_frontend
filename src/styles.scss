@@ -1,1 +1,50 @@
 /* You can add global styles to this file, and also import other style files */
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.dialog-container {
+  position: relative;
+
+  mat-progress-bar {
+    position: absolute;
+    left: -24px;
+    right: -24px;
+    width: calc(100% + 48px);
+  }
+}
+
+.mr-16 {
+  margin-right: 16px;
+}
+
+.mt-32 {
+  margin-top: 32px;
+}
+
+.pt-6 {
+  padding-top: 6px;
+}
+
+.padding-16 {
+  padding: 16px;
+}
+
+.full-width {
+  width: 100%;
+}
