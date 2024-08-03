@@ -1,10 +1,9 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule } from '@angular/forms';
 
 import {
-  MatDialog,
   MatDialogActions,
   MatDialogClose,
   MatDialogContent,
@@ -13,6 +12,9 @@ import {
 } from '@angular/material/dialog';
 import { MatDialogRef } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
+import { environment } from '../../environments/environment';
+import { lastValueFrom } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-dialog-add-task',
@@ -35,31 +37,29 @@ export class DialogAddTaskComponent {
   taskName: string = '';
   taskDescription: string = '';
 
-  constructor(public dialogRef: MatDialogRef<DialogAddTaskComponent>) {}
+  constructor(
+    public dialogRef: MatDialogRef<DialogAddTaskComponent>,
+    private http: HttpClient
+  ) {}
 
   async saveTask() {
     this.dialogRef.close();
-    console.log(this.taskName);
-    console.log(this.taskDescription);
 
-    const url: string = 'http://127.0.0.1:8000/todos/';
+    const url: string = environment.baseUrl + '/todos/';
+
+    const taskData = {
+      title: this.taskName,
+      description: this.taskDescription,
+      priority: 'low',
+      author: 1,
+      checked: false,
+    };
 
     try {
-      const response = await fetch(url, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          title: this.taskName,
-          description: this.taskDescription,
-          priority: 'medium',
-          author: 1,
-          checked: false,
-        }),
-      });
+      const response = await lastValueFrom(this.http.post(url, taskData));
+      console.log('Aufgabe erfolgreich gespeichert:', response);
     } catch (e) {
-      console.error(e);
+      console.error('Fehler beim Speichern der Aufgabe:', e);
     }
   }
 }
