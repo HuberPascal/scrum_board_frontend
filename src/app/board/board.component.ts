@@ -34,7 +34,9 @@ export class BoardComponent implements OnInit {
     return lastValueFrom(this.http.get<any>(url));
   }
 
-  openDialogAdProduct() {
-    this.dialog.open(DialogAddTaskComponent);
+  openDialogAddTask(taskType: string) {
+    console.log('taskdata', taskType);
+    const dialog = this.dialog.open(DialogAddTaskComponent);
+    dialog.componentInstance.taskType = taskType;
   }
 }

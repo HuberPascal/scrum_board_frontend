@@ -52,14 +52,8 @@ interface Tags {
 export class DialogAddTaskComponent {
   taskName: string = '';
   taskDescription: string = '';
-  selectedValue: string | undefined;
   selectedColorValue: string = 'yellow';
-
-  priority: Priority[] = [
-    { value: 'low', viewValue: 'Low' },
-    { value: 'medium', viewValue: 'Medium' },
-    { value: 'high', viewValue: 'High' },
-  ];
+  taskType: string = '';
 
   tags: Tags[] = [
     { value: 'yellow', viewValue: 'Yellow', pointClass: 'point-yellow' },
@@ -73,22 +67,25 @@ export class DialogAddTaskComponent {
   ) {}
 
   async saveTask() {
-    this.dialogRef.close();
-    console.log('prio ist', this.selectedValue);
+    console.log('color ist', this.selectedColorValue);
+    console.log('taskType ist', this.taskType);
 
     const url: string = environment.baseUrl + '/todos/';
 
     const taskData = {
       title: this.taskName,
       description: this.taskDescription,
-      priority: this.selectedValue,
+      tags: this.selectedColorValue,
       author: 1,
       checked: false,
+      taskType: this.taskType,
     };
 
     try {
       const response = await lastValueFrom(this.http.post(url, taskData));
       console.log('Aufgabe erfolgreich gespeichert:', response);
+      this.dialogRef.close();
+      window.location.reload();
     } catch (e) {
       console.error('Fehler beim Speichern der Aufgabe:', e);
     }

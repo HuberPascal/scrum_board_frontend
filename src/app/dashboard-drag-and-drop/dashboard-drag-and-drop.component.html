@@ -1,12 +1,16 @@
 <div class="drag-and-drop-container">
   <div class="column-container">
-    <div class="title-container">todo</div>
+    <div class="title-container">
+      <div>To-do</div>
+      <mat-icon (click)="triggerOpenDialog('todo')">add</mat-icon>
+    </div>
+
     <div class="drap-and-drop-area">
-      @for (task of tasks; track task) {
-      <mat-card>
+      @for (task of todoTasks; track task) {
+      <mat-card [ngClass]="task.tags">
         <p>{{ task.title }}</p>
         @if (task.description) {
-        <p class="description-container">
+        <p class="description-container" [ngClass]="getTagClass(task.tags)">
           {{ task.description }}
         </p>
         }
@@ -15,15 +19,57 @@
     </div>
   </div>
   <div class="column-container">
-    <div class="title-container">todo</div>
-    <div class="drap-and-drop-area">content</div>
+    <div class="title-container">
+      <div>Do today</div>
+      <mat-icon (click)="triggerOpenDialog('doToday')">add</mat-icon>
+    </div>
+    <div class="drap-and-drop-area">
+      @for (task of doTodoyTasks; track task) {
+      <mat-card [ngClass]="task.tags">
+        <p>{{ task.title }}</p>
+        @if (task.description) {
+        <p class="description-container" [ngClass]="getTagClass(task.tags)">
+          {{ task.description }}
+        </p>
+        }
+      </mat-card>
+      }
+    </div>
   </div>
   <div class="column-container">
-    <div class="title-container">todo</div>
-    <div class="drap-and-drop-area">content</div>
+    <div class="title-container">
+      <div>In progress</div>
+      <mat-icon (click)="triggerOpenDialog('inProgress')">add</mat-icon>
+    </div>
+    <div class="drap-and-drop-area">
+      @for (task of inProgressTasks; track task) {
+      <mat-card [ngClass]="task.tags">
+        <p>{{ task.title }}</p>
+        @if (task.description) {
+        <p class="description-container" [ngClass]="getTagClass(task.tags)">
+          {{ task.description }}
+        </p>
+        }
+      </mat-card>
+      }
+    </div>
   </div>
   <div class="column-container">
-    <div class="title-container">todo</div>
-    <div class="drap-and-drop-area">content</div>
+    <div class="title-container">
+      <div>Done</div>
+      <mat-icon (click)="triggerOpenDialog('done')">add</mat-icon>
+    </div>
+    <div class="drap-and-drop-area">
+      @for (task of doneTasks; track task) {
+      <mat-card [ngClass]="task.tags">
+        <p>{{ task.title }}</p>
+        @if (task.description) {
+        <p class="description-container" [ngClass]="getTagClass(task.tags)">
+          {{ task.description }}
+        </p>
+        }
+      </mat-card>
+      }
+    </div>
   </div>
 </div>

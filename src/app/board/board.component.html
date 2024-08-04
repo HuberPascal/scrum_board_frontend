@@ -1,14 +1,10 @@
 <h1>Board</h1>
 
-<div>
-  @for(task of tasks; track task) {
-  <p>Titel: {{ task.title }}</p>
-  <p>Description: {{ task.description }}</p>
-  }
-</div>
+<!-- <div class="example-button-row">
+  <button mat-button (click)="openDialogAddTask()">Task erstellen</button>
+</div> -->
 
-<div class="example-button-row">
-  <button mat-button (click)="openDialogAdProduct()">Task erstellen</button>
-</div>
-
-<app-dashboard-drag-and-drop [tasks]="tasks"></app-dashboard-drag-and-drop>
+<app-dashboard-drag-and-drop
+  [tasks]="tasks"
+  (openDialogAddTask)="openDialogAddTask($event)"
+></app-dashboard-drag-and-drop>
