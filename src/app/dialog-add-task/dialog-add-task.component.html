@@ -23,6 +23,15 @@
         />
         <!-- <mat-hint>Please enter a name</mat-hint> -->
       </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Prio</mat-label>
+        <mat-select [(ngModel)]="selectedValue" name="food" required>
+          @for (prio of priority; track prio) {
+          <mat-option [value]="prio.value">{{ prio.viewValue }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
     </div>
   </div>
 </div>

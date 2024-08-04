@@ -15,6 +15,12 @@ import { MatButtonModule } from '@angular/material/button';
 import { environment } from '../../environments/environment';
 import { lastValueFrom } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { MatSelectModule } from '@angular/material/select';
+
+interface Priority {
+  value: string;
+  viewValue: string;
+}
 
 @Component({
   selector: 'app-dialog-add-task',
@@ -29,6 +35,7 @@ import { HttpClient } from '@angular/common/http';
     MatDialogClose,
     MatDialogActions,
     MatButtonModule,
+    MatSelectModule,
   ],
   templateUrl: './dialog-add-task.component.html',
   styleUrl: './dialog-add-task.component.scss',
@@ -36,6 +43,13 @@ import { HttpClient } from '@angular/common/http';
 export class DialogAddTaskComponent {
   taskName: string = '';
   taskDescription: string = '';
+  selectedValue: string | undefined;
+
+  priority: Priority[] = [
+    { value: 'low', viewValue: 'Low' },
+    { value: 'medium', viewValue: 'Medium' },
+    { value: 'high', viewValue: 'High' },
+  ];
 
   constructor(
     public dialogRef: MatDialogRef<DialogAddTaskComponent>,
@@ -44,13 +58,14 @@ export class DialogAddTaskComponent {
 
   async saveTask() {
     this.dialogRef.close();
+    console.log('prio ist', this.selectedValue);
 
     const url: string = environment.baseUrl + '/todos/';
 
     const taskData = {
       title: this.taskName,
       description: this.taskDescription,
-      priority: 'low',
+      priority: this.selectedValue,
       author: 1,
       checked: false,
     };
