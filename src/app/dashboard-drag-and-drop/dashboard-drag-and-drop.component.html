@@ -1,0 +1,29 @@
+<div class="drag-and-drop-container">
+  <div class="column-container">
+    <div class="title-container">todo</div>
+    <div class="drap-and-drop-area">
+      @for (task of tasks; track task) {
+      <mat-card>
+        <p>{{ task.title }}</p>
+        @if (task.description) {
+        <p class="description-container">
+          {{ task.description }}
+        </p>
+        }
+      </mat-card>
+      }
+    </div>
+  </div>
+  <div class="column-container">
+    <div class="title-container">todo</div>
+    <div class="drap-and-drop-area">content</div>
+  </div>
+  <div class="column-container">
+    <div class="title-container">todo</div>
+    <div class="drap-and-drop-area">content</div>
+  </div>
+  <div class="column-container">
+    <div class="title-container">todo</div>
+    <div class="drap-and-drop-area">content</div>
+  </div>
+</div>

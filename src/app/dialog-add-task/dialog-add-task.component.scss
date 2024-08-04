@@ -2,16 +2,89 @@
   padding-top: 4px;
 }
 
-.full-width {
+// .full-width {
+//   width: 100%;
+// }
+
+// .example-form {
+//   min-width: 150px;
+//   max-width: 500px;
+//   width: 100vw;
+// }
+
+// .example-full-width {
+//   width: 100%;
+// }
+
+.dialog-container {
+  width: 400px;
+}
+
+.top-section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
   width: 100%;
 }
 
-.example-form {
-  min-width: 150px;
-  max-width: 500px;
-  width: 100%;
+.tag-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 20px 0;
+
+  .color-box {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+  }
+
+  .yellow {
+    background-color: #f9e073;
+  }
+
+  .green {
+    background-color: #86e257;
+  }
+
+  .blue {
+    background-color: #8fc1ff;
+  }
 }
 
-.example-full-width {
-  width: 100%;
+.yellow {
+  background-color: #ffffe0;
+}
+
+.green {
+  background-color: #e5ffd1;
+}
+
+.blue {
+  background-color: #d6e9ff;
+}
+
+.point {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-right: 8px;
+  vertical-align: middle;
+}
+
+.point-yellow {
+  background-color: #f9e073;
+}
+
+.point-green {
+  background-color: #90ee90;
+}
+
+.point-blue {
+  background-color: #add8e6;
+}
+
+::ng-deep .mat-mdc-form-field-subscript-wrapper {
+  display: none;
 }
