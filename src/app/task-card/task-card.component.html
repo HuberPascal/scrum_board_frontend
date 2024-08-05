@@ -1,0 +1,47 @@
+<div class="task-card" [ngClass]="task.tags">
+  <div>
+    <span class="description">Title</span>
+    <div>
+      @if(!textAreaTitle) {
+      <p (click)="openTaskTitleTextArea()">{{ task.title }}</p>
+      } @else {
+      <textarea
+        class="task-edit-input"
+        [(ngModel)]="task.title"
+        (blur)="closeTextArea()"
+        >{{ task.title }}</textarea
+      >
+      <div class="task-detail-edit-container">
+        <button (click)="closeTextArea()" class="cancel-button">CANCEL</button>
+        <button (click)="saveTaskTitle()">SAVE</button>
+      </div>
+      }
+    </div>
+  </div>
+  <div>
+    <span class="description">Description</span>
+    <div>
+      @if (!textAreaDescription) {
+      <p (click)="openTaskDescriptionTextArea()">{{ task.description }}</p>
+      } @else {
+      <textarea
+        class="task-edit-input"
+        [(ngModel)]="task.title"
+        (blur)="closeDescriptionArea()"
+        >{{ task.title }}</textarea
+      >
+      <div class="task-detail-edit-container">
+        <button (click)="closeDescriptionArea()" class="cancel-button">
+          CANCEL
+        </button>
+        <button (click)="saveTaskDescription()">SAVE</button>
+      </div>
+      }
+    </div>
+  </div>
+
+  <div class="color-section">
+    <div class="point" [ngClass]="getTagClass(task.tags)"></div>
+    <p>{{ task.tags }}</p>
+  </div>
+</div>

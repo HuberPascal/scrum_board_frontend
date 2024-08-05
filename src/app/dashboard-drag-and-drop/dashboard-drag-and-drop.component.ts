@@ -6,12 +6,16 @@ import {
   SimpleChanges,
   Output,
   EventEmitter,
+  inject,
 } from '@angular/core';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 
 import { CommonModule } from '@angular/common';
+import { MatDialog } from '@angular/material/dialog';
+import { TaskCardComponent } from '../task-card/task-card.component';
+import { TaskCardEditContainerComponent } from '../task-card-edit-container/task-card-edit-container.component';
 
 @Component({
   selector: 'app-dashboard-drag-and-drop',
@@ -21,6 +25,8 @@ import { CommonModule } from '@angular/common';
   styleUrl: './dashboard-drag-and-drop.component.scss',
 })
 export class DashboardDragAndDropComponent implements OnInit, OnChanges {
+  readonly dialog = inject(MatDialog);
+
   @Input() tasks: any[] = [];
   @Output() openDialogAddTask: EventEmitter<string> = new EventEmitter();
   todoTasks: any[] = [];
@@ -50,6 +56,11 @@ export class DashboardDragAndDropComponent implements OnInit, OnChanges {
 
   triggerOpenDialog(taskType: string) {
     this.openDialogAddTask.emit(taskType);
+  }
+
+  openTaskCard(task: any) {
+    const dialog = this.dialog.open(TaskCardComponent);
+    dialog.componentInstance.task = task;
   }
 
   pushTasksInArray() {
