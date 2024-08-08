@@ -1,10 +1,7 @@
 <h1>Board</h1>
 
-<!-- <div class="example-button-row">
-  <button mat-button (click)="openDialogAddTask()">Task erstellen</button>
-</div> -->
-
 <app-dashboard-drag-and-drop
   [tasks]="tasks"
   (openDialogAddTask)="openDialogAddTask($event)"
+  (taskDeleted)="onTaskDeleted($event)"
 ></app-dashboard-drag-and-drop>

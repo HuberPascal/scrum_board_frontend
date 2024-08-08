@@ -13,7 +13,7 @@ export class DatabaseService {
 
   async loadDataFromDatabase(): Promise<any> {
     try {
-      const response = await lastValueFrom(this.http.get(this.url));
+      const response = await lastValueFrom(this.http.get<any>(this.url));
       return response;
     } catch (e) {
       console.error('Fehler beim laden der Aufgaben von der Datenbank:', e);
@@ -21,11 +21,15 @@ export class DatabaseService {
     }
   }
 
-  async saveTaskInDatabase(taskData: any): Promise<void> {
+  async saveTaskInDatabase(taskData: any): Promise<any> {
     try {
-      await lastValueFrom(this.http.post(this.url, taskData));
+      const response = await lastValueFrom(
+        this.http.post<any>(this.url, taskData)
+      );
+      return response;
     } catch (e) {
       console.error('Fehler beim Speichern der Aufgabe in der Datenbank:', e);
+      throw e; // Fehler weiterwerfen, damit er in der aufrufenden Methode behandelt wird
     }
   }
 

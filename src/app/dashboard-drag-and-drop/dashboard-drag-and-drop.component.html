@@ -6,7 +6,7 @@
     </div>
 
     <div class="drap-and-drop-area">
-      @for (task of todoTasks; track task) {
+      @for (task of todoTasks; track task.id) {
       <mat-card [ngClass]="task.tags" (click)="openTaskCard(task)">
         <p>{{ task.title }}</p>
         @if (task.description) {
@@ -24,7 +24,7 @@
       <mat-icon (click)="triggerOpenDialog('doToday')">add</mat-icon>
     </div>
     <div class="drap-and-drop-area">
-      @for (task of doTodoyTasks; track task) {
+      @for (task of doTodoyTasks; track task.id) {
       <mat-card [ngClass]="task.tags" (click)="openTaskCard(task)">
         <p>{{ task.title }}</p>
         @if (task.description) {
@@ -42,7 +42,7 @@
       <mat-icon (click)="triggerOpenDialog('inProgress')">add</mat-icon>
     </div>
     <div class="drap-and-drop-area">
-      @for (task of inProgressTasks; track task) {
+      @for (task of inProgressTasks; track task.id) {
       <mat-card [ngClass]="task.tags" (click)="openTaskCard(task)">
         <p>{{ task.title }}</p>
         @if (task.description) {
@@ -60,7 +60,7 @@
       <mat-icon (click)="triggerOpenDialog('done')">add</mat-icon>
     </div>
     <div class="drap-and-drop-area">
-      @for (task of doneTasks; track task) {
+      @for (task of doneTasks; track task.id) {
       <mat-card [ngClass]="task.tags" (click)="openTaskCard(task)">
         <p>{{ task.title }}</p>
         @if (task.description) {

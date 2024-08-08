@@ -25,7 +25,7 @@ import { DatabaseService } from '../services/database.service';
 })
 export class TaskCardComponent {
   @Output() taskDeleted = new EventEmitter<number>();
-  task: any;
+  @Input() task: any;
   title: boolean = true;
   textAreaTitle: boolean = false;
   textAreaDescription: boolean = false;
@@ -96,18 +96,18 @@ export class TaskCardComponent {
     }
   }
 
-  deleteTask() {
+  async deleteTask() {
     const taskData = {
       id: this.task.id,
     };
 
     try {
-      this.database.deleteTaskInDatabase(taskData);
+      await this.database.deleteTaskInDatabase(taskData);
+      this.taskDeleted.emit(this.task.id);
     } catch (e) {
       console.error('Fehler beim löschen der Aufgabe:', e);
     } finally {
       this.closeTask();
-      window.location.reload();
     }
   }
 }

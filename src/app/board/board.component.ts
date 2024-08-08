@@ -2,9 +2,6 @@ import { Component, inject, OnInit } from '@angular/core';
 import { DialogAddTaskComponent } from '../dialog-add-task/dialog-add-task.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import { HttpClient } from '@angular/common/http';
-import { lastValueFrom } from 'rxjs';
-import { environment } from '../../environments/environment';
 import { DashboardDragAndDropComponent } from '../dashboard-drag-and-drop/dashboard-drag-and-drop.component';
 import { DatabaseService } from '../services/database.service';
 
@@ -19,26 +16,35 @@ export class BoardComponent implements OnInit {
   readonly dialog = inject(MatDialog);
   tasks: any[] = [];
 
-  constructor(private http: HttpClient, private database: DatabaseService) {}
+  constructor(private database: DatabaseService) {}
 
   async ngOnInit() {
+    this.loadTasks();
+  }
+
+  async loadTasks() {
     try {
       this.tasks = await this.database.loadDataFromDatabase();
-
-      console.log('Geladene Aufgaben:', this.tasks); // Debugging: Geladene Daten anzeigen
     } catch (e) {
       console.error(e);
     }
   }
 
-  loadData(): Promise<any> {
-    const url: string = environment.baseUrl + '/todos/';
-    return lastValueFrom(this.http.get<any>(url));
+  onTaskDeleted(taskId: number) {
+    this.tasks = this.tasks.filter((task) => task.id !== taskId);
   }
 
   openDialogAddTask(taskType: string) {
-    console.log('taskdata', taskType);
-    const dialog = this.dialog.open(DialogAddTaskComponent);
-    dialog.componentInstance.taskType = taskType;
+    const dialogRef = this.dialog.open(DialogAddTaskComponent);
+    dialogRef.componentInstance.taskType = taskType;
+
+    dialogRef.componentInstance.taskCreated.subscribe((newTask: any) => {
+      this.onTaskCreated(newTask);
+    });
+  }
+
+  onTaskCreated(newTask: any) {
+    this.tasks.push(newTask);
+    this.loadTasks();
   }
 }

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output, output } from '@angular/core';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule } from '@angular/forms';
@@ -51,6 +51,7 @@ interface Tags {
   styleUrl: './dialog-add-task.component.scss',
 })
 export class DialogAddTaskComponent {
+  @Output() taskCreated = new EventEmitter<any>();
   taskName: string = '';
   taskDescription: string = '';
   selectedColorValue: string = 'yellow';
@@ -64,7 +65,6 @@ export class DialogAddTaskComponent {
 
   constructor(
     public dialogRef: MatDialogRef<DialogAddTaskComponent>,
-    private http: HttpClient,
     private database: DatabaseService
   ) {}
 
@@ -79,9 +79,10 @@ export class DialogAddTaskComponent {
     };
 
     try {
-      await this.database.saveTaskInDatabase(taskData);
+      const savedTask = await this.database.saveTaskInDatabase(taskData);
+      this.taskCreated.emit(savedTask);
+
       this.dialogRef.close();
-      window.location.reload();
     } catch (e) {
       console.error('Fehler beim Speichern der Aufgabe:', e);
     }
@@ -89,6 +90,5 @@ export class DialogAddTaskComponent {
 
   onColorChange(event: any) {
     this.selectedColorValue = event.value;
-    console.log('Ausgewählte Farbe:', this.selectedColorValue);
   }
 }

@@ -28,42 +28,51 @@ export class DashboardDragAndDropComponent implements OnInit, OnChanges {
 
   @Input() tasks: any[] = [];
   @Output() openDialogAddTask: EventEmitter<string> = new EventEmitter();
+  @Output() taskDeleted = new EventEmitter<number>();
   todoTasks: any[] = [];
   doTodoyTasks: any[] = [];
   inProgressTasks: any[] = [];
   doneTasks: any[] = [];
 
   ngOnInit(): void {
-    this.updateTasks();
+    // this.updateTasks();
     this.pushTasksInArray();
   }
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['tasks'] && changes['tasks'].currentValue) {
       console.log('Änderungen in der Kindkomponente:', this.tasks);
-      this.updateTasks();
+      // this.updateTasks();
       this.pushTasksInArray();
     }
   }
 
-  updateTasks() {
-    if (this.tasks) {
-      this.tasks = this.tasks;
-      console.log('Aktualisierte Aufgaben in der Kindkomponente:', this.tasks);
-    }
-  }
+  // updateTasks() {
+  //   if (this.tasks) {
+  //     this.tasks = this.tasks;
+  //     console.log('Aktualisierte Aufgaben in der Kindkomponente:', this.tasks);
+  //   }
+  // }
 
   triggerOpenDialog(taskType: string) {
     this.openDialogAddTask.emit(taskType);
   }
 
   openTaskCard(task: any) {
-    const dialog = this.dialog.open(TaskCardComponent);
-    dialog.componentInstance.task = task;
+    const dialogRef = this.dialog.open(TaskCardComponent);
+    dialogRef.componentInstance.task = task;
+
+    dialogRef.componentInstance.taskDeleted.subscribe((taskId: number) => {
+      this.onTaskDeleted(taskId);
+    });
+  }
+
+  onTaskDeleted(taskId: number) {
+    this.tasks = this.tasks.filter((task) => task.id !== taskId);
+    this.taskDeleted.emit(taskId); // An die übergeordnete Komponente weiterleiten
   }
 
   pushTasksInArray() {
-    console.log('wird ausgeführt', this.tasks);
     this.todoTasks = [];
     this.doTodoyTasks = [];
     this.inProgressTasks = [];
@@ -87,20 +96,6 @@ export class DashboardDragAndDropComponent implements OnInit, OnChanges {
   }
 
   getTagClass(tag: string): string {
-    switch (tag) {
-      case 'yellow':
-        return 'yellow-class';
-      case 'blue':
-        return 'blue-class';
-      case 'green':
-        return 'green-class';
-      default:
-        'yellow;';
-        return '';
-    }
-  }
-
-  onTaskDeleted(taskId: number) {
-    this.tasks = this.tasks.filter((task) => task.id !== taskId); // Entferne die Aufgabe aus der Liste
+    return `${tag}-class`;
   }
 }
