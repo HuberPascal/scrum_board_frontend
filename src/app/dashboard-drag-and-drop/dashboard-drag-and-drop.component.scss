@@ -16,6 +16,7 @@ mat-card {
   p {
     margin: 0;
     padding: 10px 0;
+    word-break: break-all;
   }
 }
 
@@ -24,6 +25,7 @@ mat-card {
   flex-direction: column;
   gap: 20px;
   width: 100%;
+  max-width: 25%;
 }
 
 .title-container {

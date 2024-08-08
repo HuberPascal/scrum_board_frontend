@@ -15,7 +15,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { TaskCardComponent } from '../task-card/task-card.component';
-import { TaskCardEditContainerComponent } from '../task-card-edit-container/task-card-edit-container.component';
 
 @Component({
   selector: 'app-dashboard-drag-and-drop',
@@ -99,5 +98,9 @@ export class DashboardDragAndDropComponent implements OnInit, OnChanges {
         'yellow;';
         return '';
     }
+  }
+
+  onTaskDeleted(taskId: number) {
+    this.tasks = this.tasks.filter((task) => task.id !== taskId); // Entferne die Aufgabe aus der Liste
   }
 }

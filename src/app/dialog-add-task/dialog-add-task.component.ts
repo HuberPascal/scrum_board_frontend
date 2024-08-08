@@ -18,6 +18,7 @@ import { lastValueFrom } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { MatSelectModule } from '@angular/material/select';
 import { BrowserModule } from '@angular/platform-browser';
+import { DatabaseService } from '../services/database.service';
 
 interface Priority {
   value: string;
@@ -63,15 +64,11 @@ export class DialogAddTaskComponent {
 
   constructor(
     public dialogRef: MatDialogRef<DialogAddTaskComponent>,
-    private http: HttpClient
+    private http: HttpClient,
+    private database: DatabaseService
   ) {}
 
   async saveTask() {
-    console.log('color ist', this.selectedColorValue);
-    console.log('taskType ist', this.taskType);
-
-    const url: string = environment.baseUrl + '/todos/';
-
     const taskData = {
       title: this.taskName,
       description: this.taskDescription,
@@ -82,8 +79,7 @@ export class DialogAddTaskComponent {
     };
 
     try {
-      const response = await lastValueFrom(this.http.post(url, taskData));
-      console.log('Aufgabe erfolgreich gespeichert:', response);
+      await this.database.saveTaskInDatabase(taskData);
       this.dialogRef.close();
       window.location.reload();
     } catch (e) {

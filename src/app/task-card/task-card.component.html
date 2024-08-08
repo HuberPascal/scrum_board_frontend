@@ -1,19 +1,25 @@
 <div class="task-card" [ngClass]="task.tags">
-  <div>
+  <mat-icon class="button close-task-btn" (click)="closeTask()">close</mat-icon>
+  <mat-icon class="button delete-task-btn" (click)="deleteTask()"
+    >delete</mat-icon
+  >
+
+  <div class="title-container">
     <span class="description">Title</span>
     <div>
       @if(!textAreaTitle) {
       <p (click)="openTaskTitleTextArea()">{{ task.title }}</p>
       } @else {
       <textarea
+        rows="1"
+        (input)="autoExpand($event)"
         class="task-edit-input"
         [(ngModel)]="task.title"
-        (blur)="closeTextArea()"
         >{{ task.title }}</textarea
       >
       <div class="task-detail-edit-container">
         <button (click)="closeTextArea()" class="cancel-button">CANCEL</button>
-        <button (click)="saveTaskTitle()">SAVE</button>
+        <button (click)="updateTask()">SAVE</button>
       </div>
       }
     </div>
@@ -24,17 +30,14 @@
       @if (!textAreaDescription) {
       <p (click)="openTaskDescriptionTextArea()">{{ task.description }}</p>
       } @else {
-      <textarea
-        class="task-edit-input"
-        [(ngModel)]="task.title"
-        (blur)="closeDescriptionArea()"
-        >{{ task.title }}</textarea
-      >
+      <textarea class="task-edit-input" [(ngModel)]="task.description">{{
+        task.title
+      }}</textarea>
       <div class="task-detail-edit-container">
         <button (click)="closeDescriptionArea()" class="cancel-button">
           CANCEL
         </button>
-        <button (click)="saveTaskDescription()">SAVE</button>
+        <button (click)="updateTask()">SAVE</button>
       </div>
       }
     </div>

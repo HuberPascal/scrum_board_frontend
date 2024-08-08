@@ -6,6 +6,7 @@ import { HttpClient } from '@angular/common/http';
 import { lastValueFrom } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { DashboardDragAndDropComponent } from '../dashboard-drag-and-drop/dashboard-drag-and-drop.component';
+import { DatabaseService } from '../services/database.service';
 
 @Component({
   selector: 'app-board',
@@ -18,11 +19,12 @@ export class BoardComponent implements OnInit {
   readonly dialog = inject(MatDialog);
   tasks: any[] = [];
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private database: DatabaseService) {}
 
   async ngOnInit() {
     try {
-      this.tasks = await this.loadData();
+      this.tasks = await this.database.loadDataFromDatabase();
+
       console.log('Geladene Aufgaben:', this.tasks); // Debugging: Geladene Daten anzeigen
     } catch (e) {
       console.error(e);
