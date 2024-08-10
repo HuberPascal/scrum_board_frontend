@@ -3,9 +3,6 @@ import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { CommonModule } from '@angular/common';
-import { environment } from '../../environments/environment';
-import { lastValueFrom } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialogRef } from '@angular/material/dialog';
 import { DatabaseService } from '../services/database.service';
@@ -32,7 +29,6 @@ export class TaskCardComponent {
   savedHeight: string = '';
 
   constructor(
-    private http: HttpClient,
     public dialogRef: MatDialogRef<TaskCardComponent>,
     private database: DatabaseService
   ) {}

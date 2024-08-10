@@ -11,15 +11,30 @@ import {
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
+import {
+  CdkDragDrop,
+  moveItemInArray,
+  transferArrayItem,
+  CdkDrag,
+  CdkDropList,
+} from '@angular/cdk/drag-drop';
 
 import { CommonModule } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { TaskCardComponent } from '../task-card/task-card.component';
+import { DatabaseService } from '../services/database.service';
 
 @Component({
   selector: 'app-dashboard-drag-and-drop',
   standalone: true,
-  imports: [DragDropModule, MatCardModule, MatIconModule, CommonModule],
+  imports: [
+    DragDropModule,
+    MatCardModule,
+    MatIconModule,
+    CommonModule,
+    CdkDropList,
+    CdkDrag,
+  ],
   templateUrl: './dashboard-drag-and-drop.component.html',
   styleUrl: './dashboard-drag-and-drop.component.scss',
 })
@@ -33,6 +48,9 @@ export class DashboardDragAndDropComponent implements OnInit, OnChanges {
   doTodoyTasks: any[] = [];
   inProgressTasks: any[] = [];
   doneTasks: any[] = [];
+  currentTask: any;
+
+  constructor(private database: DatabaseService) {}
 
   ngOnInit(): void {
     // this.updateTasks();
@@ -97,5 +115,38 @@ export class DashboardDragAndDropComponent implements OnInit, OnChanges {
 
   getTagClass(tag: string): string {
     return `${tag}-class`;
+  }
+
+  drop(event: CdkDragDrop<string[]>) {
+    if (event.previousContainer === event.container) {
+      moveItemInArray(
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex
+      );
+    } else {
+      transferArrayItem(
+        event.previousContainer.data,
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex
+      );
+      this.udpateTaskStatus(event);
+    }
+  }
+
+  udpateTaskStatus(event: CdkDragDrop<string[]>) {
+    this.currentTask = event.item.data;
+
+    if (event.container.data === this.todoTasks) {
+      this.currentTask.taskType = 'todo';
+    } else if (event.container.data === this.doTodoyTasks) {
+      this.currentTask.taskType = 'doToday';
+    } else if (event.container.data === this.inProgressTasks) {
+      this.currentTask.taskType = 'inProgress';
+    } else if (event.container.data === this.doneTasks) {
+      this.currentTask.taskType = 'done';
+    }
+    this.database.updateTaskInDatabase(this.currentTask);
   }
 }

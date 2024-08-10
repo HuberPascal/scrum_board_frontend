@@ -5,9 +5,21 @@
       <mat-icon (click)="triggerOpenDialog('todo')">add</mat-icon>
     </div>
 
-    <div class="drap-and-drop-area">
+    <div
+      class="drap-and-drop-area"
+      cdkDropList
+      #todoList="cdkDropList"
+      [cdkDropListData]="todoTasks"
+      [cdkDropListConnectedTo]="[doTodayList, inProgressList, doneList]"
+      (cdkDropListDropped)="drop($event)"
+    >
       @for (task of todoTasks; track task.id) {
-      <mat-card [ngClass]="task.tags" (click)="openTaskCard(task)">
+      <mat-card
+        cdkDrag
+        [cdkDragData]="this.task"
+        [ngClass]="task.tags"
+        (click)="openTaskCard(task)"
+      >
         <p>{{ task.title }}</p>
         @if (task.description) {
         <p class="description-container" [ngClass]="getTagClass(task.tags)">
@@ -23,9 +35,22 @@
       <div>Do today</div>
       <mat-icon (click)="triggerOpenDialog('doToday')">add</mat-icon>
     </div>
-    <div class="drap-and-drop-area">
+    <div
+      class="drap-and-drop-area"
+      cdkDropList
+      #doTodayList="cdkDropList"
+      [cdkDropListData]="doTodoyTasks"
+      [cdkDropListConnectedTo]="[todoList, inProgressList, doneList]"
+      (cdkDropListDropped)="drop($event)"
+    >
       @for (task of doTodoyTasks; track task.id) {
-      <mat-card [ngClass]="task.tags" (click)="openTaskCard(task)">
+
+      <mat-card
+        cdkDrag
+        [cdkDragData]="this.task"
+        [ngClass]="task.tags"
+        (click)="openTaskCard(task)"
+      >
         <p>{{ task.title }}</p>
         @if (task.description) {
         <p class="description-container" [ngClass]="getTagClass(task.tags)">
@@ -41,9 +66,21 @@
       <div>In progress</div>
       <mat-icon (click)="triggerOpenDialog('inProgress')">add</mat-icon>
     </div>
-    <div class="drap-and-drop-area">
+    <div
+      class="drap-and-drop-area"
+      cdkDropList
+      #inProgressList="cdkDropList"
+      [cdkDropListData]="inProgressTasks"
+      [cdkDropListConnectedTo]="[todoList, doTodayList, doneList]"
+      (cdkDropListDropped)="drop($event)"
+    >
       @for (task of inProgressTasks; track task.id) {
-      <mat-card [ngClass]="task.tags" (click)="openTaskCard(task)">
+      <mat-card
+        cdkDrag
+        [cdkDragData]="this.task"
+        [ngClass]="task.tags"
+        (click)="openTaskCard(task)"
+      >
         <p>{{ task.title }}</p>
         @if (task.description) {
         <p class="description-container" [ngClass]="getTagClass(task.tags)">
@@ -59,9 +96,21 @@
       <div>Done</div>
       <mat-icon (click)="triggerOpenDialog('done')">add</mat-icon>
     </div>
-    <div class="drap-and-drop-area">
+    <div
+      class="drap-and-drop-area"
+      cdkDropList
+      #doneList="cdkDropList"
+      [cdkDropListData]="doneTasks"
+      [cdkDropListConnectedTo]="[todoList, inProgressList, doTodayList]"
+      (cdkDropListDropped)="drop($event)"
+    >
       @for (task of doneTasks; track task.id) {
-      <mat-card [ngClass]="task.tags" (click)="openTaskCard(task)">
+      <mat-card
+        cdkDrag
+        [cdkDragData]="this.task"
+        [ngClass]="task.tags"
+        (click)="openTaskCard(task)"
+      >
         <p>{{ task.title }}</p>
         @if (task.description) {
         <p class="description-container" [ngClass]="getTagClass(task.tags)">
