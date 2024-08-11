@@ -61,6 +61,11 @@ export class DialogAddTaskComponent {
     { value: 'yellow', viewValue: 'Yellow', pointClass: 'point-yellow' },
     { value: 'green', viewValue: 'Green', pointClass: 'point-green' },
     { value: 'blue', viewValue: 'Blue', pointClass: 'point-blue' },
+    { value: 'red', viewValue: 'Rot', pointClass: 'point-red' },
+    { value: 'orange', viewValue: 'Orange', pointClass: 'point-orange' },
+    { value: 'purple', viewValue: 'Purple', pointClass: 'point-purple' },
+    { value: 'magenta', viewValue: 'Magenta', pointClass: 'point-magenta' },
+    { value: 'cyan', viewValue: 'Cyan', pointClass: 'point-cyan' },
   ];
 
   constructor(
@@ -79,6 +84,7 @@ export class DialogAddTaskComponent {
     };
 
     try {
+      console.log(taskData);
       const savedTask = await this.database.saveTaskInDatabase(taskData);
       this.taskCreated.emit(savedTask);
 

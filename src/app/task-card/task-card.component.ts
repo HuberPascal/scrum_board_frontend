@@ -43,6 +43,11 @@ export class TaskCardComponent {
     { value: 'yellow', viewValue: 'Yellow', pointClass: 'point-yellow' },
     { value: 'green', viewValue: 'Green', pointClass: 'point-green' },
     { value: 'blue', viewValue: 'Blue', pointClass: 'point-blue' },
+    { value: 'red', viewValue: 'Red', pointClass: 'point-red' },
+    { value: 'orange', viewValue: 'Orange', pointClass: 'point-orange' },
+    { value: 'purple', viewValue: 'Purple', pointClass: 'point-purple' },
+    { value: 'magenta', viewValue: 'Magenta', pointClass: 'point-magenta' },
+    { value: 'cyan', viewValue: 'Cyan', pointClass: 'point-cyan' },
   ];
 
   constructor(
@@ -51,12 +56,9 @@ export class TaskCardComponent {
   ) {}
 
   async onTagChange() {
+    this.task.tags = this.selectedColorValue;
     await this.updateTask();
     this.taskUpdated.emit();
-  }
-
-  getTagClass(tag: string) {
-    return `${tag}-class`;
   }
 
   openTaskTitleTextArea() {

@@ -105,6 +105,31 @@ mat-card {
   border: 1px solid #86e257;
 }
 
+.red {
+  background-color: #ffdfe3;
+  border: 1px solid #ffa9b1;
+}
+
+.orange {
+  background-color: #ffeac2;
+  border: 1px solid #fcbf62;
+}
+
+.purple {
+  background-color: #f2e6ff;
+  border: 1px solid #d9b5ff;
+}
+
+.magenta {
+  background-color: #ffebff;
+  border: 1px solid #ffaeff;
+}
+
+.cyan {
+  background-color: #e6ffff;
+  border: 1px solid #7ee7e7;
+}
+
 .yellow-class {
   border-top: 1px dashed #f8db5e;
 }
@@ -112,8 +137,29 @@ mat-card {
 .blue-class {
   border-top: 1px dashed #8fc1ff;
 }
+
 .green-class {
   border-top: 1px dashed #86e257;
+}
+
+.red-class {
+  border-top: 1px dashed #ffa9b1;
+}
+
+.orange-class {
+  border-top: 1px dashed #fcbf62;
+}
+
+.purple-class {
+  border-top: 1px dashed #d9b5ff;
+}
+
+.magenta-class {
+  border-top: 1px dashed #d9b5ff;
+}
+
+.cyan-class {
+  border-top: 1px dashed #7ee7e7;
 }
 
 .title-container-red {
