@@ -28,7 +28,7 @@ interface Tags {
   templateUrl: './task-card.component.html',
   styleUrl: './task-card.component.scss',
 })
-export class TaskCardComponent {
+export class TaskCardComponent implements OnInit {
   @Output() taskDeleted = new EventEmitter<number>();
   @Output() taskUpdated = new EventEmitter<void>();
   @Input() task: any;
@@ -38,6 +38,8 @@ export class TaskCardComponent {
   savedHeight: string = '';
   selectedColorValue: string = 'yellow';
   tagColor: string = '';
+  newTitle: string = '';
+  newDescription: string = '';
 
   tags: Tags[] = [
     { value: 'yellow', viewValue: 'Yellow', pointClass: 'point-yellow' },
@@ -54,6 +56,11 @@ export class TaskCardComponent {
     public dialogRef: MatDialogRef<TaskCardComponent>,
     private database: DatabaseService
   ) {}
+
+  ngOnInit(): void {
+    this.newTitle = this.task.title;
+    this.newDescription = this.task.description;
+  }
 
   async onTagChange() {
     this.task.tags = this.selectedColorValue;
@@ -99,15 +106,23 @@ export class TaskCardComponent {
     this.dialogRef.close();
   }
 
+  async updateTaskCard() {
+    this.task.title = this.newTitle;
+    this.task.description = this.newDescription;
+    await this.updateTask();
+    this.taskUpdated.emit();
+  }
+
   async updateTask() {
     const taskData = {
       id: this.task.id,
-      title: this.task.title,
-      description: this.task.description,
+      title: this.newTitle,
+      description: this.newDescription,
       tags: this.selectedColorValue,
     };
 
     try {
+      console.log('taskData', taskData);
       await this.database.updateTaskInDatabase(taskData);
     } catch (e) {
       console.error('Fehler beim speichern der Aufgabe:', e);

@@ -14,12 +14,12 @@
         rows="1"
         (input)="autoExpand($event)"
         class="task-edit-input"
-        [(ngModel)]="task.title"
+        [(ngModel)]="newTitle"
         >{{ task.title }}</textarea
       >
       <div class="task-detail-edit-container">
         <button (click)="closeTextArea()" class="cancel-button">CANCEL</button>
-        <button (click)="updateTask()">SAVE</button>
+        <button (click)="updateTaskCard()">SAVE</button>
       </div>
       }
     </div>
@@ -30,14 +30,14 @@
       @if (!textAreaDescription) {
       <p (click)="openTaskDescriptionTextArea()">{{ task.description }}</p>
       } @else {
-      <textarea class="task-edit-input" [(ngModel)]="task.description">{{
+      <textarea class="task-edit-input" [(ngModel)]="newDescription">{{
         task.title
       }}</textarea>
       <div class="task-detail-edit-container">
         <button (click)="closeDescriptionArea()" class="cancel-button">
           CANCEL
         </button>
-        <button (click)="updateTask()">SAVE</button>
+        <button (click)="updateTaskCard()">SAVE</button>
       </div>
       }
     </div>

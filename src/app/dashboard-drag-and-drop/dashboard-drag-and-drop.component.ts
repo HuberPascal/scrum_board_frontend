@@ -117,7 +117,7 @@ export class DashboardDragAndDropComponent implements OnInit, OnChanges {
   }
 
   getTagClass(tag: string): string {
-    return `${tag}-class`;
+    return `${tag}-dashed-class`;
   }
 
   drop(event: CdkDragDrop<string[]>) {
