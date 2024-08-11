@@ -23,6 +23,7 @@ import { CommonModule } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { TaskCardComponent } from '../task-card/task-card.component';
 import { DatabaseService } from '../services/database.service';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-dashboard-drag-and-drop',
@@ -34,6 +35,7 @@ import { DatabaseService } from '../services/database.service';
     CommonModule,
     CdkDropList,
     CdkDrag,
+    MatProgressSpinnerModule,
   ],
   templateUrl: './dashboard-drag-and-drop.component.html',
   styleUrl: './dashboard-drag-and-drop.component.scss',
@@ -44,6 +46,7 @@ export class DashboardDragAndDropComponent implements OnInit, OnChanges {
   @Input() tasks: any[] = [];
   @Output() openDialogAddTask: EventEmitter<string> = new EventEmitter();
   @Output() taskDeleted = new EventEmitter<number>();
+  @Input() loading: boolean = false;
   todoTasks: any[] = [];
   doTodoyTasks: any[] = [];
   inProgressTasks: any[] = [];

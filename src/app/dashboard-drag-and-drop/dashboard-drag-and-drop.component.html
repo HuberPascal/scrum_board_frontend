@@ -1,6 +1,6 @@
 <div class="drag-and-drop-container">
   <div class="column-container">
-    <div class="title-container">
+    <div class="title-container title-container-red">
       <div>To-do</div>
       <mat-icon (click)="triggerOpenDialog('todo')">add</mat-icon>
     </div>
@@ -13,7 +13,9 @@
       [cdkDropListConnectedTo]="[doTodayList, inProgressList, doneList]"
       (cdkDropListDropped)="drop($event)"
     >
-      @for (task of todoTasks; track task.id) {
+      @if (loading) {
+      <mat-spinner class="loading-spinner"></mat-spinner>
+      } @for (task of todoTasks; track task.id) {
       <mat-card
         cdkDrag
         [cdkDragData]="this.task"
@@ -31,7 +33,7 @@
     </div>
   </div>
   <div class="column-container">
-    <div class="title-container">
+    <div class="title-container title-container-yellow">
       <div>Do today</div>
       <mat-icon (click)="triggerOpenDialog('doToday')">add</mat-icon>
     </div>
@@ -43,7 +45,9 @@
       [cdkDropListConnectedTo]="[todoList, inProgressList, doneList]"
       (cdkDropListDropped)="drop($event)"
     >
-      @for (task of doTodoyTasks; track task.id) {
+      @if (loading) {
+      <mat-spinner class="loading-spinner"></mat-spinner>
+      } @for (task of doTodoyTasks; track task.id) {
 
       <mat-card
         cdkDrag
@@ -62,7 +66,7 @@
     </div>
   </div>
   <div class="column-container">
-    <div class="title-container">
+    <div class="title-container title-container-green">
       <div>In progress</div>
       <mat-icon (click)="triggerOpenDialog('inProgress')">add</mat-icon>
     </div>
@@ -74,7 +78,9 @@
       [cdkDropListConnectedTo]="[todoList, doTodayList, doneList]"
       (cdkDropListDropped)="drop($event)"
     >
-      @for (task of inProgressTasks; track task.id) {
+      @if (loading) {
+      <mat-spinner class="loading-spinner"></mat-spinner>
+      } @for (task of inProgressTasks; track task.id) {
       <mat-card
         cdkDrag
         [cdkDragData]="this.task"
@@ -92,7 +98,7 @@
     </div>
   </div>
   <div class="column-container">
-    <div class="title-container">
+    <div class="title-container title-container-blue">
       <div>Done</div>
       <mat-icon (click)="triggerOpenDialog('done')">add</mat-icon>
     </div>
@@ -104,7 +110,9 @@
       [cdkDropListConnectedTo]="[todoList, inProgressList, doTodayList]"
       (cdkDropListDropped)="drop($event)"
     >
-      @for (task of doneTasks; track task.id) {
+      @if (loading) {
+      <mat-spinner class="loading-spinner"></mat-spinner>
+      } @for (task of doneTasks; track task.id) {
       <mat-card
         cdkDrag
         [cdkDragData]="this.task"

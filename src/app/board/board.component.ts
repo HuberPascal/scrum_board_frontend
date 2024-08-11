@@ -4,6 +4,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { DashboardDragAndDropComponent } from '../dashboard-drag-and-drop/dashboard-drag-and-drop.component';
 import { DatabaseService } from '../services/database.service';
+import { findNode } from '@angular/cdk/schematics';
 
 @Component({
   selector: 'app-board',
@@ -15,6 +16,7 @@ import { DatabaseService } from '../services/database.service';
 export class BoardComponent implements OnInit {
   readonly dialog = inject(MatDialog);
   tasks: any[] = [];
+  loading: boolean = false;
 
   constructor(private database: DatabaseService) {}
 
@@ -23,8 +25,10 @@ export class BoardComponent implements OnInit {
   }
 
   async loadTasks() {
+    this.loading = true;
     try {
       this.tasks = await this.database.loadDataFromDatabase();
+      this.loading = false;
     } catch (e) {
       console.error(e);
     }

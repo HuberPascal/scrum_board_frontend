@@ -9,9 +9,11 @@ mat-card {
 .drag-and-drop-container {
   display: flex;
   gap: 15px;
-  margin-bottom: 25px;
-  height: 500px;
-  background-color: #fff;
+  margin: 20px;
+  height: calc(100vh - 114px);
+
+  box-sizing: border-box;
+  overflow-x: auto;
 
   p {
     margin: 0;
@@ -23,18 +25,20 @@ mat-card {
 .column-container {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 16px;
   width: 100%;
   max-width: 25%;
+  background-color: #f0f2f4;
+  border-radius: 16px;
+  overflow: hidden;
 }
 
 .title-container {
   display: flex;
   justify-content: center;
   padding: 16px;
-  background-color: lightgrey;
   position: relative;
-  border-radius: 3px;
+  font-weight: 700;
 
   mat-icon {
     position: absolute;
@@ -47,10 +51,37 @@ mat-card {
 
 .drap-and-drop-area {
   height: 100%;
-  background-color: #fff;
   display: flex;
   flex-direction: column;
   gap: 10px;
+  padding: 10px;
+  overflow-y: auto;
+  position: relative;
+
+  /* Für WebKit-Browser (Chrome, Safari) */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+  }
+
+  /* Für Firefox */
+  scrollbar-width: thin; /* Dünne Scrollbar */
+  scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
+
+  .loading-spinner {
+    position: absolute;
+    right: 50%;
+    top: 10%;
+    transform: translate(50%);
+  }
 }
 
 .description-container {
@@ -82,4 +113,20 @@ mat-card {
 }
 .green-class {
   border-top: 1px dashed #86e257;
+}
+
+.title-container-red {
+  background-color: #f48897;
+}
+
+.title-container-yellow {
+  background-color: #f5e688;
+}
+
+.title-container-green {
+  background-color: #88f48f;
+}
+
+.title-container-blue {
+  background-color: #89e2f4;
 }
