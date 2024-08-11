@@ -140,3 +140,62 @@ textarea {
     }
   }
 }
+
+// .point {
+//   display: inline-block;
+//   width: 10px;
+//   height: 10px;
+//   border-radius: 50%;
+//   margin-right: 8px;
+//   vertical-align: middle;
+// }
+
+.point {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-right: 8px;
+  vertical-align: middle;
+}
+
+.tag-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 20px 0;
+
+  .color-box {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+  }
+
+  .yellow {
+    background-color: #f9e073;
+  }
+
+  .green {
+    background-color: #86e257;
+  }
+
+  .blue {
+    background-color: #8fc1ff;
+  }
+}
+
+.yellow {
+  background-color: #ffffe0;
+}
+
+.green {
+  background-color: #e5ffd1;
+}
+
+.blue {
+  background-color: #d6e9ff;
+}
+
+::ng-deep .mat-mdc-form-field-subscript-wrapper {
+  display: none;
+}

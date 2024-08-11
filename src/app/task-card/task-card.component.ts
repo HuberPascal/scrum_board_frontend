@@ -6,6 +6,13 @@ import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialogRef } from '@angular/material/dialog';
 import { DatabaseService } from '../services/database.service';
+import { MatSelectModule } from '@angular/material/select';
+
+interface Tags {
+  value: string;
+  viewValue: string;
+  pointClass: string;
+}
 
 @Component({
   selector: 'app-task-card',
@@ -16,22 +23,37 @@ import { DatabaseService } from '../services/database.service';
     MatCardModule,
     CommonModule,
     MatIconModule,
+    MatSelectModule,
   ],
   templateUrl: './task-card.component.html',
   styleUrl: './task-card.component.scss',
 })
 export class TaskCardComponent {
   @Output() taskDeleted = new EventEmitter<number>();
+  @Output() taskUpdated = new EventEmitter<void>();
   @Input() task: any;
   title: boolean = true;
   textAreaTitle: boolean = false;
   textAreaDescription: boolean = false;
   savedHeight: string = '';
+  selectedColorValue: string = 'yellow';
+  tagColor: string = '';
+
+  tags: Tags[] = [
+    { value: 'yellow', viewValue: 'Yellow', pointClass: 'point-yellow' },
+    { value: 'green', viewValue: 'Green', pointClass: 'point-green' },
+    { value: 'blue', viewValue: 'Blue', pointClass: 'point-blue' },
+  ];
 
   constructor(
     public dialogRef: MatDialogRef<TaskCardComponent>,
     private database: DatabaseService
   ) {}
+
+  async onTagChange() {
+    await this.updateTask();
+    this.taskUpdated.emit();
+  }
 
   getTagClass(tag: string) {
     return `${tag}-class`;
@@ -75,15 +97,16 @@ export class TaskCardComponent {
     this.dialogRef.close();
   }
 
-  updateTask() {
+  async updateTask() {
     const taskData = {
       id: this.task.id,
       title: this.task.title,
       description: this.task.description,
+      tags: this.selectedColorValue,
     };
 
     try {
-      this.database.updateTaskInDatabase(taskData);
+      await this.database.updateTaskInDatabase(taskData);
     } catch (e) {
       console.error('Fehler beim speichern der Aufgabe:', e);
     } finally {

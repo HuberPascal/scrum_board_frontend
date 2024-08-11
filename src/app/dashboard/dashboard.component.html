@@ -1,8 +1,9 @@
-<h1>Board</h1>
+<h1>Kanban Board</h1>
 
 <app-dashboard-drag-and-drop
   [tasks]="tasks"
   [loading]="loading"
   (openDialogAddTask)="openDialogAddTask($event)"
   (taskDeleted)="onTaskDeleted($event)"
+  (reloadTasks)="reloadTasks()"
 ></app-dashboard-drag-and-drop>

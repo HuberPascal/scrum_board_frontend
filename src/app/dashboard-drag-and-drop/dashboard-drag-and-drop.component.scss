@@ -9,9 +9,9 @@ mat-card {
 .drag-and-drop-container {
   display: flex;
   gap: 15px;
-  margin: 20px;
-  height: calc(100vh - 114px);
+  margin: 0 20px 20px 20px;
 
+  height: calc(100vh - 150px);
   box-sizing: border-box;
   overflow-x: auto;
 
@@ -39,13 +39,14 @@ mat-card {
   padding: 16px;
   position: relative;
   font-weight: 700;
+  font-size: 20px;
 
   mat-icon {
     position: absolute;
     right: 16px;
     cursor: pointer;
     transform: scale(1.5);
-    color: #3ec54e;
+    color: black;
   }
 }
 

@@ -1,4 +1,4 @@
-<div class="task-card" [ngClass]="task.tags">
+<div class="task-card" [ngClass]="selectedColorValue">
   <mat-icon class="button close-task-btn" (click)="closeTask()">close</mat-icon>
   <mat-icon class="button delete-task-btn" (click)="deleteTask()"
     >delete</mat-icon
@@ -43,8 +43,22 @@
     </div>
   </div>
 
-  <div class="color-section">
-    <div class="point" [ngClass]="getTagClass(task.tags)"></div>
-    <p>{{ task.tags }}</p>
+  <div class="tag-container">
+    <div class="color-box" [ngClass]="selectedColorValue"></div>
+    <mat-form-field appearance="outline">
+      <mat-select
+        [(ngModel)]="selectedColorValue"
+        (ngModelChange)="onTagChange()"
+        name="tag"
+        required
+      >
+        @for (tag of tags; track tag) {
+        <mat-option [value]="tag.value"
+          ><span [class]="tag.pointClass" class="point"></span
+          >{{ tag.viewValue }}</mat-option
+        >
+        }
+      </mat-select>
+    </mat-form-field>
   </div>
 </div>

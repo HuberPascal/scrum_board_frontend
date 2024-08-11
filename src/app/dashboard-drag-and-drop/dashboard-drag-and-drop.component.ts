@@ -46,6 +46,7 @@ export class DashboardDragAndDropComponent implements OnInit, OnChanges {
   @Input() tasks: any[] = [];
   @Output() openDialogAddTask: EventEmitter<string> = new EventEmitter();
   @Output() taskDeleted = new EventEmitter<number>();
+  @Output() reloadTasks = new EventEmitter<void>();
   @Input() loading: boolean = false;
   todoTasks: any[] = [];
   doTodoyTasks: any[] = [];
@@ -56,24 +57,15 @@ export class DashboardDragAndDropComponent implements OnInit, OnChanges {
   constructor(private database: DatabaseService) {}
 
   ngOnInit(): void {
-    // this.updateTasks();
     this.pushTasksInArray();
   }
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['tasks'] && changes['tasks'].currentValue) {
       console.log('Änderungen in der Kindkomponente:', this.tasks);
-      // this.updateTasks();
       this.pushTasksInArray();
     }
   }
-
-  // updateTasks() {
-  //   if (this.tasks) {
-  //     this.tasks = this.tasks;
-  //     console.log('Aktualisierte Aufgaben in der Kindkomponente:', this.tasks);
-  //   }
-  // }
 
   triggerOpenDialog(taskType: string) {
     this.openDialogAddTask.emit(taskType);
@@ -86,6 +78,14 @@ export class DashboardDragAndDropComponent implements OnInit, OnChanges {
     dialogRef.componentInstance.taskDeleted.subscribe((taskId: number) => {
       this.onTaskDeleted(taskId);
     });
+
+    dialogRef.componentInstance.taskUpdated.subscribe(() => {
+      this.loadDataAgain(); // Aufruf der Funktion, wenn das Event ausgelöst wird
+    });
+  }
+
+  loadDataAgain() {
+    this.reloadTasks.emit();
   }
 
   onTaskDeleted(taskId: number) {

@@ -4,16 +4,15 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { DashboardDragAndDropComponent } from '../dashboard-drag-and-drop/dashboard-drag-and-drop.component';
 import { DatabaseService } from '../services/database.service';
-import { findNode } from '@angular/cdk/schematics';
 
 @Component({
   selector: 'app-board',
   standalone: true,
   imports: [MatButtonModule, MatDialogModule, DashboardDragAndDropComponent],
-  templateUrl: './board.component.html',
-  styleUrl: './board.component.scss',
+  templateUrl: './dashboard.component.html',
+  styleUrl: './dashboard.component.scss',
 })
-export class BoardComponent implements OnInit {
+export class DashboardComponent implements OnInit {
   readonly dialog = inject(MatDialog);
   tasks: any[] = [];
   loading: boolean = false;
@@ -49,6 +48,10 @@ export class BoardComponent implements OnInit {
 
   onTaskCreated(newTask: any) {
     this.tasks.push(newTask);
+    this.loadTasks();
+  }
+
+  reloadTasks() {
     this.loadTasks();
   }
 }

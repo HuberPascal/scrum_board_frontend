@@ -17,6 +17,7 @@ body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
   background-color: #028299;
+  overflow: hidden;
 }
 
 .dialog-container {
@@ -48,4 +49,16 @@ body {
 
 .full-width {
   width: 100%;
+}
+
+.point-yellow {
+  background-color: #f9e073;
+}
+
+.point-green {
+  background-color: #90ee90;
+}
+
+.point-blue {
+  background-color: #add8e6;
 }
