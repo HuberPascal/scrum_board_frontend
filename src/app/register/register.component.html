@@ -1,38 +1,136 @@
-<form (ngSubmit)="register()">
-  <input
-    type="text"
-    name="firstName"
-    [(ngModel)]="firstName"
-    placeholder="First Name"
-    required
-  />
-  <input
-    type="text"
-    name="lastName"
-    [(ngModel)]="lastName"
-    placeholder="Last Name"
-    required
-  />
-  <input
-    type="text"
-    name="username"
-    [(ngModel)]="username"
-    placeholder="username"
-    required
-  />
-  <input
-    type="email"
-    name="email"
-    [(ngModel)]="email"
-    placeholder="Email"
-    required
-  />
-  <input
-    type="password"
-    name="password"
-    [(ngModel)]="password"
-    placeholder="password"
-    required
-  />
-  <button>Registrieren</button>
-</form>
+<div class="register-container">
+  <div class="inner-container">
+    <div class="register-user-form">
+      <div class="titel-container">
+        <img src="kanban.png" alt="Cucumbers" />
+      </div>
+      <form (ngSubmit)="register()">
+        <div>
+          <div class="form-row">
+            <div class="form-group">
+              <div
+                class="input-wrapper"
+                [ngClass]="{ 'input-focused': isFirstNameFocused }"
+              >
+                <label>First Name</label>
+                <input
+                  (focus)="onFirstNameFocus()"
+                  (blur)="onFirstNameBlur()"
+                  class="form-control"
+                  type="text"
+                  name="firstName"
+                  [(ngModel)]="firstName"
+                  placeholder="Your First Name"
+                  required
+                />
+              </div>
+            </div>
+            <div class="form-group">
+              <div
+                class="input-wrapper"
+                [ngClass]="{ 'input-focused': isLastNameFocused }"
+              >
+                <label>Last Name</label>
+                <input
+                  (focus)="onLastNameFocus()"
+                  (blur)="onLastNameBlur()"
+                  class="form-control"
+                  type="text"
+                  name="lastName"
+                  [(ngModel)]="lastName"
+                  placeholder="Your Last Name"
+                  required
+                />
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <div
+              class="input-wrapper"
+              [ngClass]="{ 'input-focused': isUsernameFocused }"
+            >
+              <label>Username</label>
+              <input
+                (focus)="onUsernameFocus()"
+                (blur)="onUsernameBlur()"
+                class="form-control"
+                type="text"
+                name="username"
+                [(ngModel)]="username"
+                placeholder="User Login ID"
+                required
+              />
+            </div>
+          </div>
+          <div class="form-group">
+            <div
+              class="input-wrapper"
+              [ngClass]="{ 'input-focused': isEmailFocused }"
+            >
+              <label>Email</label>
+              <input
+                (focus)="onEmailFocus()"
+                (blur)="onEmailBlur()"
+                class="form-control"
+                type="email"
+                name="email"
+                [(ngModel)]="email"
+                placeholder="Email"
+                required
+              />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <div
+                class="input-wrapper"
+                [ngClass]="{ 'input-focused': isPasswordFocused1 }"
+              >
+                <label>Password</label>
+                <input
+                  (focus)="onPasswordFocus1()"
+                  (blur)="onPasswordBlur1()"
+                  class="form-control"
+                  type="password"
+                  name="password"
+                  [(ngModel)]="password1"
+                  placeholder="Be Secure"
+                  required
+                />
+              </div>
+            </div>
+            <div class="form-group">
+              <div
+                class="input-wrapper"
+                [ngClass]="{ 'input-focused': isPasswordFocused2 }"
+              >
+                <label>Confirm Password</label>
+                <input
+                  (focus)="onPasswordFocus2()"
+                  (blur)="onPasswordBlur2()"
+                  class="form-control"
+                  type="password"
+                  name="password"
+                  [(ngModel)]="password2"
+                  placeholder="Do Not Forget"
+                  required
+                />
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <button class="btn btn-primary">Register Now</button>
+            </div>
+            <div class="col">
+              <br />
+              <a routerLink="/dashboard" class="btn login-container"
+                >Already have an account? Login</a
+              >
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
