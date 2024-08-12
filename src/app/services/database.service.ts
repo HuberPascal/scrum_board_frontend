@@ -7,7 +7,7 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root',
 })
 export class DatabaseService {
-  url: string = environment.baseUrl + 'todos/';
+  url: string = environment.baseUrl + '/todos/';
 
   constructor(private http: HttpClient) {}
 

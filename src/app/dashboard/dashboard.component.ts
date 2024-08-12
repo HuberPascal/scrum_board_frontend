@@ -6,7 +6,7 @@ import { DashboardDragAndDropComponent } from '../dashboard-drag-and-drop/dashbo
 import { DatabaseService } from '../services/database.service';
 
 @Component({
-  selector: 'app-board',
+  selector: 'app-dashboard',
   standalone: true,
   imports: [MatButtonModule, MatDialogModule, DashboardDragAndDropComponent],
   templateUrl: './dashboard.component.html',

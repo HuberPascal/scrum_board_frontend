@@ -28,7 +28,7 @@ export class LoginComponent {
 
       if (response && response.token) {
         localStorage.setItem('authToken', response.token);
-        this.router.navigateByUrl('/board');
+        this.router.navigateByUrl('/dashboard');
       }
       this.isSubmitting = false;
     } catch (error) {

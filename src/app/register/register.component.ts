@@ -10,18 +10,24 @@ import { AuthService } from '../services/auth.service';
   styleUrl: './register.component.scss',
 })
 export class RegisterComponent {
+  firstName: string = '';
+  lastName: string = '';
   username: string = '';
+  email: string = '';
   password: string = '';
 
-  constructor(private as: AuthService) {}
+  constructor(private authService: AuthService) {}
 
   async register() {
     try {
-      let resp = await this.as.registerWithUsernameAndPassword(
+      let response = await this.authService.registerWithUsernameAndPassword(
+        this.firstName,
+        this.lastName,
         this.username,
+        this.email,
         this.password
       );
-      console.log(resp);
+      console.log(response);
       // redirect
     } catch (error) {
       console.error(error);

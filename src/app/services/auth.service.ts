@@ -15,22 +15,40 @@ interface AuthResponse {
 export class AuthService {
   constructor(private http: HttpClient) {}
 
-  public registerWithUsernameAndPassword(username: string, password: string) {
+  public async registerWithUsernameAndPassword(
+    firstName: string,
+    lastName: string,
+    username: string,
+    email: string,
+    password: string
+  ): Promise<any> {
     const url = environment.baseUrl + '/register/';
-    const body = {
-      username: username,
-      password: password,
-    };
-    return lastValueFrom(this.http.post(url, body));
+    const body = { firstName, lastName, username, email, password };
+    const headers = { 'Content-Type': 'application/json' };
+
+    try {
+      return await lastValueFrom(this.http.post(url, body, { headers }));
+    } catch (error) {
+      console.error('Registration error', error);
+      throw new Error('Registration failed. Please try again.');
+    }
   }
 
-  public loginWithUsernameAndPassword(username: string, password: string) {
-    const url = 'http://127.0.0.1:8000/login/';
-    const body = {
-      username: username,
-      password: password,
-    };
-    // Typisieren der POST-Anfrage mit AuthResponse
-    return lastValueFrom(this.http.post<AuthResponse>(url, body));
+  public async loginWithUsernameAndPassword(
+    username: string,
+    password: string
+  ): Promise<AuthResponse> {
+    const url = environment.baseUrl + '/login/';
+    const body = { username, password };
+    const headers = { 'Content-Type': 'application/json' };
+
+    try {
+      return await lastValueFrom(
+        this.http.post<AuthResponse>(url, body, { headers })
+      );
+    } catch (error) {
+      console.error('Login failed', error);
+      throw new Error('Login failed. Please try again later.');
+    }
   }
 }
