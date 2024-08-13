@@ -23,7 +23,13 @@ export class AuthService {
     password: string
   ): Promise<any> {
     const url = environment.baseUrl + '/register/';
-    const body = { firstName, lastName, username, email, password };
+    const body = {
+      first_name: firstName,
+      last_name: lastName,
+      username,
+      email,
+      password,
+    };
     const headers = { 'Content-Type': 'application/json' };
 
     try {

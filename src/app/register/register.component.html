@@ -3,8 +3,9 @@
     <div class="register-user-form">
       <div class="titel-container">
         <img src="kanban.png" alt="Cucumbers" />
+        <h1>Create Account</h1>
       </div>
-      <form (ngSubmit)="register()">
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
         <div>
           <div class="form-row">
             <div class="form-group">
@@ -14,15 +15,21 @@
               >
                 <label>First Name</label>
                 <input
+                  formControlName="firstName"
                   (focus)="onFirstNameFocus()"
                   (blur)="onFirstNameBlur()"
                   class="form-control"
                   type="text"
-                  name="firstName"
                   [(ngModel)]="firstName"
                   placeholder="Your First Name"
-                  required
                 />
+                @if (submitted && f['firstName'].errors) {
+                <div class="invalid-feedback">
+                  @if (f['firstName'].errors['required']) {
+                  <div>First Name is required</div>
+                  }
+                </div>
+                }
               </div>
             </div>
             <div class="form-group">
@@ -32,15 +39,22 @@
               >
                 <label>Last Name</label>
                 <input
+                  formControlName="lastName"
                   (focus)="onLastNameFocus()"
                   (blur)="onLastNameBlur()"
                   class="form-control"
                   type="text"
-                  name="lastName"
                   [(ngModel)]="lastName"
                   placeholder="Your Last Name"
                   required
                 />
+                @if (submitted && f['lastName'].errors) {
+                <div class="invalid-feedback">
+                  @if (f['lastName'].errors['required']) {
+                  <div>Last Name is required</div>
+                  }
+                </div>
+                }
               </div>
             </div>
           </div>
@@ -51,15 +65,25 @@
             >
               <label>Username</label>
               <input
+                formControlName="username"
                 (focus)="onUsernameFocus()"
                 (blur)="onUsernameBlur()"
                 class="form-control"
                 type="text"
-                name="username"
                 [(ngModel)]="username"
                 placeholder="User Login ID"
-                required
               />
+              @if (submitted && f['username'].errors) {
+              <div class="invalid-feedback">
+                @if (f['username'].errors['required']) {
+                <div>Username is required</div>
+                } @if (f['username'].errors['minlength']) {
+                <div>Username must be at least 6 characters</div>
+                } @if (f['username'].errors['maxlength']) {
+                <div>Username must not exceed 20 characters</div>
+                }
+              </div>
+              }
             </div>
           </div>
           <div class="form-group">
@@ -69,62 +93,90 @@
             >
               <label>Email</label>
               <input
+                formControlName="email"
                 (focus)="onEmailFocus()"
                 (blur)="onEmailBlur()"
                 class="form-control"
                 type="email"
-                name="email"
                 [(ngModel)]="email"
-                placeholder="Email"
-                required
+                placeholder="Your Email Address"
               />
+              @if (submitted && f['email'].errors) {
+              <div class="invalid-feedback">
+                @if (f['email'].errors['required']) {
+                <div>Email is required</div>
+                } @if (f['email'].errors['email']) {
+                <div>Email is invalid</div>
+                }
+              </div>
+              }
             </div>
           </div>
           <div class="form-row">
             <div class="form-group">
               <div
                 class="input-wrapper"
-                [ngClass]="{ 'input-focused': isPasswordFocused1 }"
+                [ngClass]="{ 'input-focused': isPasswordFocused }"
               >
                 <label>Password</label>
                 <input
-                  (focus)="onPasswordFocus1()"
-                  (blur)="onPasswordBlur1()"
+                  formControlName="password"
+                  (focus)="onPasswordFocus()"
+                  (blur)="onPasswordBlur()"
                   class="form-control"
                   type="password"
-                  name="password"
-                  [(ngModel)]="password1"
+                  [(ngModel)]="password"
                   placeholder="Be Secure"
-                  required
                 />
+                @if (submitted && f['password'].errors) {
+                <div class="invalid-feedback">
+                  @if (f['password'].errors['required']) {
+                  <div>Password is required</div>
+                  } @if (f['password'].errors['minlength']) {
+                  <div>Password must be at least 6 characters</div>
+                  } @if (f['password'].errors['maxlength']) {
+                  <div>Username must not exceed 40 characters</div>
+                  }
+                </div>
+                }
               </div>
             </div>
             <div class="form-group">
               <div
                 class="input-wrapper"
-                [ngClass]="{ 'input-focused': isPasswordFocused2 }"
+                [ngClass]="{ 'input-focused': isConfirmPasswordFocused }"
               >
                 <label>Confirm Password</label>
                 <input
-                  (focus)="onPasswordFocus2()"
-                  (blur)="onPasswordBlur2()"
+                  formControlName="confirmPassword"
+                  (focus)="onConfirmPasswordFocus()"
+                  (blur)="onConfirmPasswordBlur()"
                   class="form-control"
                   type="password"
-                  name="password"
-                  [(ngModel)]="password2"
+                  [(ngModel)]="confirmPassword"
                   placeholder="Do Not Forget"
-                  required
                 />
+                @if (submitted && f['confirmPassword'].errors) {
+                <div class="invalid-feedback">
+                  @if (f['confirmPassword'].errors['required']) {
+                  <div>Confirm Password is required</div>
+                  } @if (f['confirmPassword'].errors['matching']) {
+                  <div>Confirm Password does not match</div>
+                  }
+                </div>
+                }
               </div>
             </div>
           </div>
           <div class="row">
             <div class="col">
-              <button class="btn btn-primary">Register Now</button>
+              <button type="submit" class="btn btn-primary">
+                Register Now
+              </button>
             </div>
             <div class="col">
               <br />
-              <a routerLink="/dashboard" class="btn login-container"
+              <a routerLink="/login" class="btn login-container"
                 >Already have an account? Login</a
               >
             </div>

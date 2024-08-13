@@ -1,10 +1,21 @@
-import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import {
+  ReactiveFormsModule,
+  FormsModule,
+  AbstractControl,
+  FormBuilder,
+  FormGroup,
+  Validators,
+  FormControl,
+} from '@angular/forms';
+import Validation from '../utils/validation';
+// import { BrowserModule } from '@angular/platform-browser';
 import { AuthService } from '../services/auth.service';
 import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-register',
@@ -13,39 +24,99 @@ import { RouterLink } from '@angular/router';
     FormsModule,
     MatCardModule,
     MatInputModule,
-    CommonModule,
     RouterLink,
+    ReactiveFormsModule,
+    CommonModule,
+    MatIconModule,
   ],
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss',
 })
-export class RegisterComponent {
+export class RegisterComponent implements OnInit {
   firstName: string = '';
   lastName: string = '';
   username: string = '';
   email: string = '';
-  password1: string = '';
-  password2: string = '';
+  password: string = '';
+  confirmPassword: string = '';
   isFirstNameFocused = false;
   isLastNameFocused = false;
   isUsernameFocused = false;
   isEmailFocused = false;
-  isPasswordFocused1 = false;
-  isPasswordFocused2 = false;
+  isPasswordFocused = false;
+  isConfirmPasswordFocused = false;
+  registerForm: FormGroup | undefined;
+  form: FormGroup = new FormGroup({
+    firstName: new FormControl(''),
+    lastName: new FormControl(''),
+    username: new FormControl(''),
+    email: new FormControl(''),
+    password: new FormControl(''),
+    confirmPassword: new FormControl(''),
+  });
+  submitted = false;
 
-  constructor(private authService: AuthService) {}
+  constructor(
+    private authService: AuthService,
+    private formBuilder: FormBuilder,
+    private router: Router
+  ) {}
+  ngOnInit(): void {
+    this.form = this.formBuilder.group(
+      {
+        firstName: ['', Validators.required],
+        lastName: ['', Validators.required],
+        username: [
+          '',
+          [
+            Validators.required,
+            Validators.minLength(6),
+            Validators.maxLength(20),
+          ],
+        ],
+        email: ['', [Validators.required, Validators.email]],
+        password: [
+          '',
+          [
+            Validators.required,
+            Validators.minLength(6),
+            Validators.maxLength(40),
+          ],
+        ],
+        confirmPassword: ['', Validators.required],
+      },
+      {
+        validators: [Validation.match('password', 'confirmPassword')],
+      }
+    );
+  }
 
-  async register() {
+  get f(): { [key: string]: AbstractControl } {
+    return this.form.controls;
+  }
+
+  async onSubmit() {
+    console.log(this.firstName);
+    console.log(JSON.stringify(this.form.value, null, 2));
+
+    this.submitted = true;
+
+    if (this.form.invalid) {
+      return;
+    }
+
+    console.log(JSON.stringify(this.form.value, null, 2));
+
     try {
       let response = await this.authService.registerWithUsernameAndPassword(
         this.firstName,
         this.lastName,
         this.username,
         this.email,
-        this.password1
+        this.password
       );
       console.log(response);
-      // redirect
+      this.router.navigateByUrl('/dashboard');
     } catch (error) {
       console.error(error);
     }
@@ -83,19 +154,19 @@ export class RegisterComponent {
     this.isEmailFocused = false;
   }
 
-  onPasswordFocus1() {
-    this.isPasswordFocused1 = true;
+  onPasswordFocus() {
+    this.isPasswordFocused = true;
   }
 
-  onPasswordBlur1() {
-    this.isPasswordFocused1 = false;
+  onPasswordBlur() {
+    this.isPasswordFocused = false;
   }
 
-  onPasswordFocus2() {
-    this.isPasswordFocused2 = true;
+  onConfirmPasswordFocus() {
+    this.isConfirmPasswordFocused = true;
   }
 
-  onPasswordBlur2() {
-    this.isPasswordFocused2 = false;
+  onConfirmPasswordBlur() {
+    this.isConfirmPasswordFocused = false;
   }
 }
