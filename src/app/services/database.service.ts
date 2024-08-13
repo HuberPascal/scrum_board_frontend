@@ -35,7 +35,9 @@ export class DatabaseService {
 
   async updateTaskInDatabase(taskData: any): Promise<void> {
     try {
-      await lastValueFrom(this.http.patch(this.url, taskData));
+      await lastValueFrom(
+        this.http.patch(`${this.url}${taskData.id}/`, taskData)
+      );
     } catch (e) {
       console.error('Fehler beim updaten der Aufgabe in der Datenbank:', e);
     }
@@ -43,7 +45,9 @@ export class DatabaseService {
 
   async deleteTaskInDatabase(taskData: any): Promise<void> {
     try {
-      await lastValueFrom(this.http.delete(this.url, { body: taskData }));
+      await lastValueFrom(
+        this.http.delete(`${this.url}${taskData.id}/`, { body: taskData })
+      );
     } catch (e) {
       console.error('Fehler beim löschen der Aufgabe in der Datenbank:', e);
     }

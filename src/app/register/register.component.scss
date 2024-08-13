@@ -41,7 +41,7 @@
     align-items: center;
     flex-direction: column;
     padding: 80px;
-    gap: 50px;
+    gap: 40px;
     max-width: 600px;
   }
 }
@@ -159,4 +159,14 @@
   max-width: 100%;
   word-wrap: break-word;
   white-space: normal;
+}
+
+.alert {
+  color: #f44336;
+  font-size: 12px;
+}
+
+.error-container {
+  height: 12px;
+  margin-bottom: 1rem;
 }

@@ -4,6 +4,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { DashboardDragAndDropComponent } from '../dashboard-drag-and-drop/dashboard-drag-and-drop.component';
 import { DatabaseService } from '../services/database.service';
+import { AuthService } from '../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -17,10 +19,18 @@ export class DashboardComponent implements OnInit {
   tasks: any[] = [];
   loading: boolean = false;
 
-  constructor(private database: DatabaseService) {}
+  constructor(
+    private database: DatabaseService,
+    private authService: AuthService,
+    private router: Router
+  ) {}
 
   async ngOnInit() {
-    this.loadTasks();
+    if (this.authService.isAuthenticated()) {
+      this.loadTasks();
+    } else {
+      this.router.navigate(['/login']);
+    }
   }
 
   async loadTasks() {
@@ -28,8 +38,8 @@ export class DashboardComponent implements OnInit {
     try {
       this.tasks = await this.database.loadDataFromDatabase();
       this.loading = false;
-    } catch (e) {
-      console.error(e);
+    } catch (error) {
+      console.error(error);
     }
   }
 

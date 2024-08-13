@@ -2,7 +2,7 @@
   <div class="inner-container">
     <div class="register-user-form">
       <div class="titel-container">
-        <img src="kanban.png" alt="Cucumbers" />
+        <img src="kanban.png" alt="kanban-icon" />
         <h1>Create Account</h1>
       </div>
       <form [formGroup]="form" (ngSubmit)="onSubmit()">
@@ -101,8 +101,8 @@
               <div class="invalid-feedback">
                 @if (f['email'].errors['required']) {
                 <div>Email is required</div>
-                } @if (f['email'].errors['email']) {
-                <div>Email is invalid</div>
+                } @if (f['email'].errors['pattern']) {
+                <div>Enter a valid email address</div>
                 }
               </div>
               }
@@ -173,6 +173,11 @@
               <a routerLink="/login" class="btn login-container"
                 >Already have an account? Login</a
               >
+            </div>
+            <div class="error-container">
+              @if (errorMessage) {
+              <div class="alert">{{ errorMessage }}</div>
+              }
             </div>
           </div>
         </div>

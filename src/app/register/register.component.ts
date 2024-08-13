@@ -36,6 +36,7 @@ export class RegisterComponent implements OnInit {
   isEmailFocused = false;
   isPasswordFocused = false;
   isConfirmPasswordFocused = false;
+  errorMessage: string = '';
   registerForm: FormGroup | undefined;
   form: FormGroup = new FormGroup({
     firstName: new FormControl(''),
@@ -53,6 +54,10 @@ export class RegisterComponent implements OnInit {
     private router: Router
   ) {}
   ngOnInit(): void {
+    this.initializeForm();
+  }
+
+  initializeForm() {
     this.form = this.formBuilder.group(
       {
         firstName: ['', Validators.required],
@@ -65,7 +70,15 @@ export class RegisterComponent implements OnInit {
             Validators.maxLength(20),
           ],
         ],
-        email: ['', [Validators.required, Validators.email]],
+        email: [
+          '',
+          [
+            Validators.required,
+            Validators.pattern(
+              '^[A-Za-z0-9._%+-]+@[A-Za-z0-9._%+-]{2,}[.][A-Za-z]{2,}$'
+            ),
+          ],
+        ],
         password: [
           '',
           [
@@ -88,6 +101,7 @@ export class RegisterComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true;
+    this.errorMessage = '';
 
     if (this.form.invalid) {
       return;
@@ -104,9 +118,10 @@ export class RegisterComponent implements OnInit {
         this.form.value.email,
         this.form.value.password
       );
-      this.router.navigateByUrl('/dashboard');
+      // this.router.navigateByUrl('/dashboard');
     } catch (error) {
       console.error(error);
+      this.errorMessage = 'Enter a valid email address';
     }
   }
 

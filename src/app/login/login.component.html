@@ -1,19 +1,77 @@
-<form (ngSubmit)="login()">
-  <input
-    type="text"
-    name="username"
-    [(ngModel)]="username"
-    placeholder="username"
-    [disabled]="isSubmitting"
-    required
-  />
-  <input
-    type="password"
-    name="password"
-    [(ngModel)]="password"
-    placeholder="password"
-    [disabled]="isSubmitting"
-    required
-  />
-  <button>Login</button>
-</form>
+<div class="register-container">
+  <div class="inner-container">
+    <div class="login-user-form">
+      <div class="titel-container">
+        <img src="kanban.png" alt="kanban-icon" />
+        <h1>Sign In</h1>
+      </div>
+      <form class="form" [formGroup]="form" (ngSubmit)="onSubmit()">
+        <div>
+          <div class="form-group">
+            <div class="input-wrapper">
+              <label>Login ID</label>
+              <input
+                formControlName="username"
+                name="username"
+                class="form-control"
+                type="text"
+                placeholder="Username"
+              />
+              @if (submitted && f['username'].errors) {
+              <div class="invalid-feedback">
+                @if (f['username'].errors['required']) {
+                <div>Username is required</div>
+                } @if (f['username'].errors['minlength']) {
+                <div>Username must be at least 6 characters</div>
+                } @if (f['username'].errors['maxlength']) {
+                <div>Username must not exceed 20 characters</div>
+                }
+              </div>
+              }
+            </div>
+          </div>
+          <div class="form-group margin-0">
+            <div class="input-wrapper">
+              <label>Password</label>
+              <input
+                formControlName="password"
+                name="password"
+                class="form-control"
+                type="password"
+                placeholder="Enter Password"
+              />
+              @if (submitted && f['password'].errors) {
+              <div class="invalid-feedback">
+                @if (f['password'].errors['required']) {
+                <div>Password is required</div>
+                } @if (f['password'].errors['minlength']) {
+                <div>Password must be at least 6 characters</div>
+                } @if (f['password'].errors['maxlength']) {
+                <div>Username must not exceed 40 characters</div>
+                }
+              </div>
+              }
+            </div>
+          </div>
+          <!-- General Error Message -->
+          <div class="error-container">
+            @if (errorMessage) {
+            <div class="alert">{{ errorMessage }}</div>
+            }
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <button type="submit" class="btn btn-primary">Login</button>
+          </div>
+          <div class="col">
+            <br />
+            <a routerLink="/signup" class="btn login-container"
+              >Don't have an account yet? Register Now</a
+            >
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,33 +1,85 @@
-import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import {
+  AbstractControl,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { AuthService } from '../services/auth.service';
-import { Router } from '@angular/router';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [FormsModule],
+  imports: [RouterLink, ReactiveFormsModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
 })
-export class LoginComponent {
-  username: string = '';
-  password: string = '';
-  isSubmitting: boolean = false;
+export class LoginComponent implements OnInit {
+  submitted: boolean = false;
+  errorMessage: string = '';
+  form: FormGroup = new FormGroup({
+    username: new FormControl(''),
+    password: new FormControl(''),
+  });
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(
+    private authService: AuthService,
+    private formBuilder: FormBuilder
+  ) {}
+
+  ngOnInit(): void {
+    this.initializeForm();
+  }
+
+  initializeForm() {
+    this.form = this.formBuilder.group({
+      username: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(6),
+          Validators.maxLength(20),
+        ],
+      ],
+      password: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(6),
+          Validators.maxLength(40),
+        ],
+      ],
+    });
+  }
+
+  get f(): { [key: string]: AbstractControl } {
+    return this.form.controls;
+  }
+
+  onSubmit() {
+    this.submitted = true;
+    this.errorMessage = '';
+
+    if (this.form.invalid) {
+      return;
+    }
+    this.login();
+  }
 
   async login() {
-    this.isSubmitting = true;
     try {
       await this.authService.loginWithUsernameAndPassword(
-        this.username,
-        this.password
+        this.form.value.username,
+        this.form.value.password
       );
-      this.isSubmitting = false;
+      this.submitted = false;
     } catch (error) {
       console.error('Login failed', error);
-      this.isSubmitting = false;
+      this.errorMessage = 'Invalid username or password';
+      this.submitted = false;
     }
   }
 }
