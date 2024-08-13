@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { lastValueFrom } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 interface AuthResponse {
   token: string;
@@ -13,7 +14,7 @@ interface AuthResponse {
   providedIn: 'root',
 })
 export class AuthService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router: Router) {}
 
   public async registerWithUsernameAndPassword(
     firstName: string,
@@ -22,7 +23,7 @@ export class AuthService {
     email: string,
     password: string
   ): Promise<any> {
-    const url = environment.baseUrl + '/register/';
+    const url = `${environment.baseUrl}/register/`;
     const body = {
       first_name: firstName,
       last_name: lastName,
@@ -33,7 +34,11 @@ export class AuthService {
     const headers = { 'Content-Type': 'application/json' };
 
     try {
-      return await lastValueFrom(this.http.post(url, body, { headers }));
+      const response = await lastValueFrom(
+        this.http.post<AuthResponse>(url, body, { headers })
+      );
+      localStorage.setItem('authToken', response.token);
+      this.router.navigateByUrl('/dashboard');
     } catch (error) {
       console.error('Registration error', error);
       throw new Error('Registration failed. Please try again.');
@@ -43,18 +48,34 @@ export class AuthService {
   public async loginWithUsernameAndPassword(
     username: string,
     password: string
-  ): Promise<AuthResponse> {
-    const url = environment.baseUrl + '/login/';
+  ): Promise<void> {
+    const url = `${environment.baseUrl}/login/`;
     const body = { username, password };
     const headers = { 'Content-Type': 'application/json' };
 
     try {
-      return await lastValueFrom(
+      const response = await lastValueFrom(
         this.http.post<AuthResponse>(url, body, { headers })
       );
+      localStorage.setItem('authToken', response.token);
+      this.router.navigateByUrl('/dashboard');
     } catch (error) {
       console.error('Login failed', error);
       throw new Error('Login failed. Please try again later.');
     }
+  }
+
+  public getToken(): string | null {
+    return localStorage.getItem('authToken');
+  }
+
+  public isAuthenticated(): boolean {
+    const token = this.getToken();
+    return !!token; // Gibt true zurück, wenn ein Token existiert
+  }
+
+  public logout(): void {
+    localStorage.removeItem('authToken');
+    this.router.navigate(['/login']); // Weiterleitung zur Login-Seite
   }
 }

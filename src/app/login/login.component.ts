@@ -15,24 +15,18 @@ export class LoginComponent {
   password: string = '';
   isSubmitting: boolean = false;
 
-  constructor(private as: AuthService, private router: Router) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
   async login() {
     this.isSubmitting = true;
     try {
-      let response = await this.as.loginWithUsernameAndPassword(
+      await this.authService.loginWithUsernameAndPassword(
         this.username,
         this.password
       );
-      console.log('response ist:', response.token);
-
-      if (response && response.token) {
-        localStorage.setItem('authToken', response.token);
-        this.router.navigateByUrl('/dashboard');
-      }
       this.isSubmitting = false;
     } catch (error) {
-      console.error(error);
+      console.error('Login failed', error);
       this.isSubmitting = false;
     }
   }

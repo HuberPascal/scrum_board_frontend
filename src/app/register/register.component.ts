@@ -95,27 +95,24 @@ export class RegisterComponent implements OnInit {
     return this.form.controls;
   }
 
-  async onSubmit() {
-    console.log(this.firstName);
-    console.log(JSON.stringify(this.form.value, null, 2));
-
+  onSubmit() {
     this.submitted = true;
 
     if (this.form.invalid) {
       return;
     }
+    this.userRegister();
+  }
 
-    console.log(JSON.stringify(this.form.value, null, 2));
-
+  async userRegister() {
     try {
-      let response = await this.authService.registerWithUsernameAndPassword(
+      await this.authService.registerWithUsernameAndPassword(
         this.firstName,
         this.lastName,
         this.username,
         this.email,
         this.password
       );
-      console.log(response);
       this.router.navigateByUrl('/dashboard');
     } catch (error) {
       console.error(error);
