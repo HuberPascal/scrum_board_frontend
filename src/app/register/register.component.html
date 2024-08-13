@@ -20,7 +20,6 @@
                   (blur)="onFirstNameBlur()"
                   class="form-control"
                   type="text"
-                  [(ngModel)]="firstName"
                   placeholder="Your First Name"
                 />
                 @if (submitted && f['firstName'].errors) {
@@ -44,7 +43,6 @@
                   (blur)="onLastNameBlur()"
                   class="form-control"
                   type="text"
-                  [(ngModel)]="lastName"
                   placeholder="Your Last Name"
                   required
                 />
@@ -70,7 +68,6 @@
                 (blur)="onUsernameBlur()"
                 class="form-control"
                 type="text"
-                [(ngModel)]="username"
                 placeholder="User Login ID"
               />
               @if (submitted && f['username'].errors) {
@@ -98,7 +95,6 @@
                 (blur)="onEmailBlur()"
                 class="form-control"
                 type="email"
-                [(ngModel)]="email"
                 placeholder="Your Email Address"
               />
               @if (submitted && f['email'].errors) {
@@ -125,7 +121,6 @@
                   (blur)="onPasswordBlur()"
                   class="form-control"
                   type="password"
-                  [(ngModel)]="password"
                   placeholder="Be Secure"
                 />
                 @if (submitted && f['password'].errors) {
@@ -153,7 +148,6 @@
                   (blur)="onConfirmPasswordBlur()"
                   class="form-control"
                   type="password"
-                  [(ngModel)]="confirmPassword"
                   placeholder="Do Not Forget"
                 />
                 @if (submitted && f['confirmPassword'].errors) {

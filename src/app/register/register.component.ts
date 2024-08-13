@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {
   ReactiveFormsModule,
-  FormsModule,
   AbstractControl,
   FormBuilder,
   FormGroup,
@@ -9,7 +8,6 @@ import {
   FormControl,
 } from '@angular/forms';
 import Validation from '../utils/validation';
-// import { BrowserModule } from '@angular/platform-browser';
 import { AuthService } from '../services/auth.service';
 import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
@@ -21,7 +19,6 @@ import { MatIconModule } from '@angular/material/icon';
   selector: 'app-register',
   standalone: true,
   imports: [
-    FormsModule,
     MatCardModule,
     MatInputModule,
     RouterLink,
@@ -33,12 +30,6 @@ import { MatIconModule } from '@angular/material/icon';
   styleUrl: './register.component.scss',
 })
 export class RegisterComponent implements OnInit {
-  firstName: string = '';
-  lastName: string = '';
-  username: string = '';
-  email: string = '';
-  password: string = '';
-  confirmPassword: string = '';
   isFirstNameFocused = false;
   isLastNameFocused = false;
   isUsernameFocused = false;
@@ -107,11 +98,11 @@ export class RegisterComponent implements OnInit {
   async userRegister() {
     try {
       await this.authService.registerWithUsernameAndPassword(
-        this.firstName,
-        this.lastName,
-        this.username,
-        this.email,
-        this.password
+        this.form.value.firstName,
+        this.form.value.lastName,
+        this.form.value.username,
+        this.form.value.email,
+        this.form.value.password
       );
       this.router.navigateByUrl('/dashboard');
     } catch (error) {
