@@ -9,17 +9,21 @@ import {
 } from '@angular/forms';
 import { AuthService } from '../services/auth.service';
 import { RouterLink } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [RouterLink, ReactiveFormsModule],
+  imports: [RouterLink, ReactiveFormsModule, CommonModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
 })
 export class LoginComponent implements OnInit {
   submitted: boolean = false;
   errorMessage: string = '';
+  isUsernameFocused = false;
+  isPasswordFocused = false;
+
   form: FormGroup = new FormGroup({
     username: new FormControl(''),
     password: new FormControl(''),
@@ -81,5 +85,21 @@ export class LoginComponent implements OnInit {
       this.errorMessage = 'Invalid username or password';
       this.submitted = false;
     }
+  }
+
+  onUsernameFocus() {
+    this.isUsernameFocused = true;
+  }
+
+  onUsernameBlur() {
+    this.isUsernameFocused = false;
+  }
+
+  onPasswordFocus() {
+    this.isPasswordFocused = true;
+  }
+
+  onPasswordBlur() {
+    this.isPasswordFocused = false;
   }
 }

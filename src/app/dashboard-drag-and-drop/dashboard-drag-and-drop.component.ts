@@ -48,7 +48,7 @@ export class DashboardDragAndDropComponent implements OnInit, OnChanges {
   @Output() taskDeleted = new EventEmitter<number>();
   @Output() reloadTasks = new EventEmitter<void>();
   @Input() loading: boolean = false;
-  todoTasks: any[] = [];
+  todoTasks: any[] = [{}];
   doTodoyTasks: any[] = [];
   inProgressTasks: any[] = [];
   doneTasks: any[] = [];

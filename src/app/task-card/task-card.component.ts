@@ -60,6 +60,7 @@ export class TaskCardComponent implements OnInit {
   ngOnInit(): void {
     this.newTitle = this.task.title;
     this.newDescription = this.task.description;
+    this.selectedColorValue = this.task.tags;
   }
 
   async onTagChange() {
@@ -109,6 +110,7 @@ export class TaskCardComponent implements OnInit {
   async updateTaskCard() {
     this.task.title = this.newTitle;
     this.task.description = this.newDescription;
+    this.task.tags = this.selectedColorValue;
     await this.updateTask();
     this.taskUpdated.emit();
   }

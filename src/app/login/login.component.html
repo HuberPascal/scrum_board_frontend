@@ -8,10 +8,15 @@
       <form class="form" [formGroup]="form" (ngSubmit)="onSubmit()">
         <div>
           <div class="form-group">
-            <div class="input-wrapper">
+            <div
+              class="input-wrapper"
+              [ngClass]="{ 'input-focused': isUsernameFocused }"
+            >
               <label>Login ID</label>
               <input
                 formControlName="username"
+                (focus)="onUsernameFocus()"
+                (blur)="onUsernameBlur()"
                 name="username"
                 class="form-control"
                 type="text"
@@ -31,10 +36,15 @@
             </div>
           </div>
           <div class="form-group margin-0">
-            <div class="input-wrapper">
+            <div
+              class="input-wrapper"
+              [ngClass]="{ 'input-focused': isPasswordFocused }"
+            >
               <label>Password</label>
               <input
                 formControlName="password"
+                (focus)="onPasswordFocus()"
+                (blur)="onPasswordBlur()"
                 name="password"
                 class="form-control"
                 type="password"

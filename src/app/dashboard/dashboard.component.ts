@@ -6,11 +6,17 @@ import { DashboardDragAndDropComponent } from '../dashboard-drag-and-drop/dashbo
 import { DatabaseService } from '../services/database.service';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [MatButtonModule, MatDialogModule, DashboardDragAndDropComponent],
+  imports: [
+    MatButtonModule,
+    MatDialogModule,
+    DashboardDragAndDropComponent,
+    MatIconModule,
+  ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss',
 })
@@ -63,5 +69,9 @@ export class DashboardComponent implements OnInit {
 
   reloadTasks() {
     this.loadTasks();
+  }
+
+  logout() {
+    this.authService.logout();
   }
 }
