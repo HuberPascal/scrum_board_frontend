@@ -44,15 +44,32 @@
               [ngClass]="{ 'input-focused': isPasswordFocused }"
             >
               <label>Password</label>
-              <input
-                formControlName="password"
-                (focus)="onPasswordFocus()"
-                (blur)="onPasswordBlur()"
-                name="password"
-                class="form-control"
-                type="password"
-                placeholder="Enter Password"
-              />
+              <div class="password-visible-container">
+                <input
+                  formControlName="password"
+                  (focus)="onPasswordFocus()"
+                  (blur)="onPasswordBlur()"
+                  name="password"
+                  class="form-control"
+                  type="password"
+                  placeholder="Enter Password"
+                  matInput
+                  [type]="hide() ? 'password' : 'text'"
+                />
+                <button
+                  mat-icon-button
+                  matSuffix
+                  type="button"
+                  (click)="togglePasswordVisibility($event)"
+                  [attr.aria-label]="'Hide password'"
+                  [attr.aria-pressed]="hide()"
+                >
+                  <mat-icon>{{
+                    hide() ? "visibility_off" : "visibility"
+                  }}</mat-icon>
+                </button>
+              </div>
+
               @if (submitted && f['password'].errors) {
               <div class="invalid-feedback">
                 @if (f['password'].errors['required']) {

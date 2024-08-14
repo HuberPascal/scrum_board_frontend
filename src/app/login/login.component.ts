@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
@@ -11,6 +11,10 @@ import { AuthService } from '../services/auth.service';
 import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-login',
@@ -20,6 +24,10 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
     ReactiveFormsModule,
     CommonModule,
     MatProgressBarModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatIconModule,
+    MatButtonModule,
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
@@ -30,6 +38,7 @@ export class LoginComponent implements OnInit {
   isUsernameFocused = false;
   isPasswordFocused = false;
   loading: boolean = false;
+  hide = signal(true);
 
   form: FormGroup = new FormGroup({
     username: new FormControl(''),
@@ -72,7 +81,6 @@ export class LoginComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true;
-    this.loading = true;
     this.errorMessage = '';
 
     if (this.form.invalid) {
@@ -82,6 +90,8 @@ export class LoginComponent implements OnInit {
   }
 
   async login() {
+    this.loading = true;
+
     try {
       await this.authService.loginWithUsernameAndPassword(
         this.form.value.username,
@@ -111,5 +121,10 @@ export class LoginComponent implements OnInit {
 
   onPasswordBlur() {
     this.isPasswordFocused = false;
+  }
+
+  togglePasswordVisibility(event: MouseEvent) {
+    this.hide.set(!this.hide());
+    event.stopPropagation();
   }
 }

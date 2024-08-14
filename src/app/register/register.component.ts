@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import {
   ReactiveFormsModule,
   AbstractControl,
@@ -15,6 +15,8 @@ import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-register',
@@ -27,6 +29,9 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
     CommonModule,
     MatIconModule,
     MatProgressBarModule,
+    MatFormFieldModule,
+    MatIconModule,
+    MatButtonModule,
   ],
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss',
@@ -40,6 +45,8 @@ export class RegisterComponent implements OnInit {
   isConfirmPasswordFocused = false;
   errorMessage: string = '';
   loading: boolean = false;
+  submitted = false;
+  hide = signal(true);
 
   registerForm: FormGroup | undefined;
   form: FormGroup = new FormGroup({
@@ -50,7 +57,6 @@ export class RegisterComponent implements OnInit {
     password: new FormControl(''),
     confirmPassword: new FormControl(''),
   });
-  submitted = false;
 
   constructor(
     private authService: AuthService,
@@ -104,7 +110,6 @@ export class RegisterComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true;
-    this.loading = true;
     this.errorMessage = '';
 
     if (this.form.invalid) {
@@ -114,6 +119,8 @@ export class RegisterComponent implements OnInit {
   }
 
   async userRegister() {
+    this.loading = true;
+
     try {
       await this.authService.registerWithUsernameAndPassword(
         this.form.value.firstName,
@@ -128,6 +135,11 @@ export class RegisterComponent implements OnInit {
       this.errorMessage = 'Enter a valid email address';
       this.loading = false;
     }
+  }
+
+  togglePasswordVisibility(event: MouseEvent) {
+    this.hide.set(!this.hide());
+    event.stopPropagation();
   }
 
   onFirstNameFocus() {
