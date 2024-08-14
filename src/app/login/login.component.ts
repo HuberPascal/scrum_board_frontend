@@ -10,11 +10,17 @@ import {
 import { AuthService } from '../services/auth.service';
 import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [RouterLink, ReactiveFormsModule, CommonModule],
+  imports: [
+    RouterLink,
+    ReactiveFormsModule,
+    CommonModule,
+    MatProgressBarModule,
+  ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
 })
@@ -23,6 +29,7 @@ export class LoginComponent implements OnInit {
   errorMessage: string = '';
   isUsernameFocused = false;
   isPasswordFocused = false;
+  loading: boolean = false;
 
   form: FormGroup = new FormGroup({
     username: new FormControl(''),
@@ -65,6 +72,7 @@ export class LoginComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true;
+    this.loading = true;
     this.errorMessage = '';
 
     if (this.form.invalid) {
@@ -80,10 +88,12 @@ export class LoginComponent implements OnInit {
         this.form.value.password
       );
       this.submitted = false;
+      this.loading = false;
     } catch (error) {
       console.error('Login failed', error);
       this.errorMessage = 'Invalid username or password';
       this.submitted = false;
+      this.loading = false;
     }
   }
 

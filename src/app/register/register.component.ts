@@ -12,8 +12,9 @@ import { AuthService } from '../services/auth.service';
 import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
 import { CommonModule } from '@angular/common';
-import { Router, RouterLink } from '@angular/router';
+import { RouterLink } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 @Component({
   selector: 'app-register',
@@ -25,6 +26,7 @@ import { MatIconModule } from '@angular/material/icon';
     ReactiveFormsModule,
     CommonModule,
     MatIconModule,
+    MatProgressBarModule,
   ],
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss',
@@ -37,6 +39,8 @@ export class RegisterComponent implements OnInit {
   isPasswordFocused = false;
   isConfirmPasswordFocused = false;
   errorMessage: string = '';
+  loading: boolean = false;
+
   registerForm: FormGroup | undefined;
   form: FormGroup = new FormGroup({
     firstName: new FormControl(''),
@@ -50,8 +54,7 @@ export class RegisterComponent implements OnInit {
 
   constructor(
     private authService: AuthService,
-    private formBuilder: FormBuilder,
-    private router: Router
+    private formBuilder: FormBuilder
   ) {}
   ngOnInit(): void {
     this.initializeForm();
@@ -101,6 +104,7 @@ export class RegisterComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true;
+    this.loading = true;
     this.errorMessage = '';
 
     if (this.form.invalid) {
@@ -118,10 +122,11 @@ export class RegisterComponent implements OnInit {
         this.form.value.email,
         this.form.value.password
       );
-      // this.router.navigateByUrl('/dashboard');
+      this.loading = false;
     } catch (error) {
       console.error(error);
       this.errorMessage = 'Enter a valid email address';
+      this.loading = false;
     }
   }
 

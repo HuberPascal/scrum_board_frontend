@@ -1,5 +1,8 @@
 <div class="register-container">
   <div class="inner-container">
+    @if (loading) {
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    }
     <div class="register-user-form">
       <div class="titel-container">
         <img src="kanban.png" alt="kanban-icon" />
@@ -164,7 +167,11 @@
           </div>
           <div class="row">
             <div class="col">
-              <button type="submit" class="btn btn-primary">
+              <button
+                type="submit"
+                class="btn btn-primary"
+                [disabled]="loading"
+              >
                 Register Now
               </button>
             </div>
