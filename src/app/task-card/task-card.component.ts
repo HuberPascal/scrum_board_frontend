@@ -93,16 +93,6 @@ export class TaskCardComponent implements OnInit {
     this.textAreaDescription = false;
   }
 
-  autoExpand(event: Event): void {
-    const textarea = event.target as HTMLTextAreaElement;
-    textarea.style.height = 'auto'; // Setzt die Höhe zurück
-    textarea.style.height = textarea.scrollHeight + 'px'; // Passt die Höhe basierend auf dem Inhalt an
-
-    // Höhe speichern
-    this.savedHeight = textarea.style.height;
-    console.log('die höhe in px is', this.savedHeight);
-  }
-
   closeTask() {
     this.dialogRef.close();
   }
@@ -124,10 +114,9 @@ export class TaskCardComponent implements OnInit {
     };
 
     try {
-      console.log('taskData', taskData);
       await this.database.updateTaskInDatabase(taskData);
-    } catch (e) {
-      console.error('Fehler beim speichern der Aufgabe:', e);
+    } catch (error) {
+      console.error('Fehler beim speichern der Aufgabe:', error);
     } finally {
       this.closeTextArea();
       this.closeDescriptionArea();
@@ -142,10 +131,15 @@ export class TaskCardComponent implements OnInit {
     try {
       await this.database.deleteTaskInDatabase(taskData);
       this.taskDeleted.emit(this.task.id);
-    } catch (e) {
-      console.error('Fehler beim löschen der Aufgabe:', e);
+    } catch (error) {
+      console.error('Fehler beim löschen der Aufgabe:', error);
     } finally {
       this.closeTask();
     }
+  }
+
+  getTextAreaClass(): string {
+    console.log(this.selectedColorValue);
+    return `task-edit-input-${this.selectedColorValue}`;
   }
 }

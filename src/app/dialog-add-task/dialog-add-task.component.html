@@ -29,7 +29,7 @@
         <div class="color-box" [ngClass]="selectedColorValue"></div>
         <mat-form-field appearance="outline">
           <mat-label>Color</mat-label>
-          <mat-select [(ngModel)]="selectedColorValue" name="tag" required>
+          <mat-select [(ngModel)]="selectedColorValue" name="tag">
             @for (tag of tags; track tag) {
             <mat-option [value]="tag.value"
               ><span [class]="tag.pointClass" class="point"></span
@@ -44,5 +44,12 @@
 </div>
 <div mat-dialog-actions [ngClass]="selectedColorValue">
   <button (click)="dialogRef.close()" mat-button>Cancel</button>
-  <button (click)="saveTask()" mat-button cdkFocusInitial>Save</button>
+  <button
+    [disabled]="taskName.trim() == ''"
+    (click)="saveTask()"
+    mat-button
+    cdkFocusInitial
+  >
+    Save
+  </button>
 </div>

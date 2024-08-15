@@ -8,18 +8,24 @@
     <span class="description">Title</span>
     <div>
       @if(!textAreaTitle) {
-      <p (click)="openTaskTitleTextArea()">{{ task.title }}</p>
+      <p
+        [ngStyle]="!task.title ? { color: '#3338b6' } : {}"
+        (click)="openTaskTitleTextArea()"
+      >
+        {{ task.title || "Title hinzufügen" }}
+      </p>
       } @else {
       <textarea
-        rows="1"
-        (input)="autoExpand($event)"
-        class="task-edit-input"
+        [ngClass]="getTextAreaClass()"
         [(ngModel)]="newTitle"
+        maxlength="200"
         >{{ task.title }}</textarea
       >
       <div class="task-detail-edit-container">
         <button (click)="closeTextArea()" class="cancel-button">CANCEL</button>
-        <button (click)="updateTaskCard()">SAVE</button>
+        <button [disabled]="newTitle.trim() == ''" (click)="updateTaskCard()">
+          SAVE
+        </button>
       </div>
       }
     </div>
@@ -28,11 +34,19 @@
     <span class="description">Description</span>
     <div>
       @if (!textAreaDescription) {
-      <p (click)="openTaskDescriptionTextArea()">{{ task.description }}</p>
+      <p
+        [ngStyle]="!task.description ? { color: '#3338b6' } : {}"
+        (click)="openTaskDescriptionTextArea()"
+      >
+        {{ task.description || "Description hinzufügen" }}
+      </p>
       } @else {
-      <textarea class="task-edit-input" [(ngModel)]="newDescription">{{
-        task.title
-      }}</textarea>
+      <textarea
+        [ngClass]="getTextAreaClass()"
+        [(ngModel)]="newDescription"
+        maxlength="200"
+        >{{ task.title }}</textarea
+      >
       <div class="task-detail-edit-container">
         <button (click)="closeDescriptionArea()" class="cancel-button">
           CANCEL
