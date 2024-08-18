@@ -59,7 +59,6 @@ export class AuthService {
       const response = await lastValueFrom(
         this.http.post<AuthResponse>(url, body, { headers })
       );
-      console.log('der register ist', response);
       localStorage.setItem('authToken', response.token);
       localStorage.setItem('firstName', response.first_name);
       this.router.navigateByUrl('/dashboard');
