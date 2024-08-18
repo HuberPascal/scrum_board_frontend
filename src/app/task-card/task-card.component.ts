@@ -14,6 +14,12 @@ interface Tags {
   pointClass: string;
 }
 
+interface Users {
+  firstName: string;
+  lastName: string;
+  userLetters: string;
+}
+
 @Component({
   selector: 'app-task-card',
   standalone: true,
@@ -32,11 +38,13 @@ export class TaskCardComponent implements OnInit {
   @Output() taskDeleted = new EventEmitter<number>();
   @Output() taskUpdated = new EventEmitter<void>();
   @Input() task: any;
+  @Input() users: any;
   title: boolean = true;
   textAreaTitle: boolean = false;
   textAreaDescription: boolean = false;
   savedHeight: string = '';
   selectedColorValue: string = 'yellow';
+  selectedMember: string = '';
   tagColor: string = '';
   newTitle: string = '';
   newDescription: string = '';
@@ -51,6 +59,8 @@ export class TaskCardComponent implements OnInit {
     { value: 'magenta', viewValue: 'Magenta', pointClass: 'point-magenta' },
     { value: 'cyan', viewValue: 'Cyan', pointClass: 'point-cyan' },
   ];
+
+  usersArray: Users[] = [];
 
   constructor(
     public dialogRef: MatDialogRef<TaskCardComponent>,
@@ -139,7 +149,6 @@ export class TaskCardComponent implements OnInit {
   }
 
   getTextAreaClass(): string {
-    console.log(this.selectedColorValue);
     return `task-edit-input-${this.selectedColorValue}`;
   }
 }

@@ -23,7 +23,9 @@ import { MatIconModule } from '@angular/material/icon';
 export class DashboardComponent implements OnInit {
   readonly dialog = inject(MatDialog);
   tasks: any[] = [];
+  users: any[] = [];
   loading: boolean = false;
+  firstName: string = '';
 
   constructor(
     private database: DatabaseService,
@@ -34,6 +36,8 @@ export class DashboardComponent implements OnInit {
   async ngOnInit() {
     if (this.authService.isAuthenticated()) {
       this.loadTasks();
+      this.loadUsers();
+      this.firstName = localStorage.getItem('firstName') || '';
     } else {
       this.router.navigate(['/login']);
     }
@@ -42,8 +46,16 @@ export class DashboardComponent implements OnInit {
   async loadTasks() {
     this.loading = true;
     try {
-      this.tasks = await this.database.loadDataFromDatabase();
+      this.tasks = await this.database.loadTasksFromDatabase();
       this.loading = false;
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  async loadUsers() {
+    try {
+      this.users = await this.database.loadUsersFromDatabase();
     } catch (error) {
       console.error(error);
     }

@@ -44,6 +44,7 @@ export class DashboardDragAndDropComponent implements OnInit, OnChanges {
   readonly dialog = inject(MatDialog);
 
   @Input() tasks: any[] = [];
+  @Input() users: any[] = [];
   @Output() openDialogAddTask: EventEmitter<string> = new EventEmitter();
   @Output() taskDeleted = new EventEmitter<number>();
   @Output() reloadTasks = new EventEmitter<void>();
@@ -62,7 +63,6 @@ export class DashboardDragAndDropComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['tasks'] && changes['tasks'].currentValue) {
-      console.log('Änderungen in der Kindkomponente:', this.tasks);
       this.pushTasksInArray();
     }
   }
@@ -74,6 +74,7 @@ export class DashboardDragAndDropComponent implements OnInit, OnChanges {
   openTaskCard(task: any) {
     const dialogRef = this.dialog.open(TaskCardComponent);
     dialogRef.componentInstance.task = task;
+    dialogRef.componentInstance.users = this.users;
 
     dialogRef.componentInstance.taskDeleted.subscribe((taskId: number) => {
       this.onTaskDeleted(taskId);

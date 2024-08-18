@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output, output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, output } from '@angular/core';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule } from '@angular/forms';
@@ -31,6 +31,19 @@ interface Tags {
   pointClass: string;
 }
 
+interface Member {
+  id: number;
+  first_name: string;
+  last_name: string;
+  initials: string;
+}
+
+interface Users {
+  firstName: string;
+  lastName: string;
+  userLetters: string;
+}
+
 @Component({
   selector: 'app-dialog-add-task',
   standalone: true,
@@ -50,8 +63,9 @@ interface Tags {
   templateUrl: './dialog-add-task.component.html',
   styleUrl: './dialog-add-task.component.scss',
 })
-export class DialogAddTaskComponent {
+export class DialogAddTaskComponent implements OnInit {
   @Output() taskCreated = new EventEmitter<any>();
+  users: any[] = [];
   taskName: string = '';
   taskDescription: string = '';
   selectedColorValue: string = 'yellow';
@@ -68,10 +82,16 @@ export class DialogAddTaskComponent {
     { value: 'cyan', viewValue: 'Cyan', pointClass: 'point-cyan' },
   ];
 
+  usersArray: Users[] = [];
+
   constructor(
     public dialogRef: MatDialogRef<DialogAddTaskComponent>,
     private database: DatabaseService
   ) {}
+
+  async ngOnInit(): Promise<void> {
+    this.users = await this.database.loadUsersFromDatabase();
+  }
 
   async saveTask() {
     const taskData = {
@@ -84,7 +104,6 @@ export class DialogAddTaskComponent {
     };
 
     try {
-      console.log(taskData);
       const savedTask = await this.database.saveTaskInDatabase(taskData);
       this.taskCreated.emit(savedTask);
 

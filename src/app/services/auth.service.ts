@@ -8,6 +8,7 @@ interface AuthResponse {
   token: string;
   user_id: number;
   email: string;
+  first_name: string;
 }
 
 @Injectable({
@@ -23,7 +24,7 @@ export class AuthService {
     email: string,
     password: string
   ): Promise<any> {
-    const url = `${environment.baseUrl}/register/`;
+    const url = `${environment.baseUrl}/auth/register/`;
     const body = {
       first_name: firstName,
       last_name: lastName,
@@ -38,6 +39,7 @@ export class AuthService {
         this.http.post<AuthResponse>(url, body, { headers })
       );
       localStorage.setItem('authToken', response.token);
+      localStorage.setItem('firstName', response.first_name);
       this.router.navigateByUrl('/dashboard');
     } catch (error) {
       console.error('Registration error', error);
@@ -49,7 +51,7 @@ export class AuthService {
     username: string,
     password: string
   ): Promise<void> {
-    const url = `${environment.baseUrl}/login/`;
+    const url = `${environment.baseUrl}/auth/login/`;
     const body = { username, password };
     const headers = { 'Content-Type': 'application/json' };
 
@@ -57,7 +59,9 @@ export class AuthService {
       const response = await lastValueFrom(
         this.http.post<AuthResponse>(url, body, { headers })
       );
+      console.log('der register ist', response);
       localStorage.setItem('authToken', response.token);
+      localStorage.setItem('firstName', response.first_name);
       this.router.navigateByUrl('/dashboard');
     } catch (error) {
       console.error('Login failed', error);
@@ -76,6 +80,7 @@ export class AuthService {
 
   public logout(): void {
     localStorage.removeItem('authToken');
+    localStorage.removeItem('firstName');
     this.router.navigate(['/login']); // Weiterleitung zur Login-Seite
   }
 }

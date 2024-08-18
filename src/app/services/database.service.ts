@@ -7,16 +7,17 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root',
 })
 export class DatabaseService {
-  url: string = environment.baseUrl + '/todos/';
+  todos_url: string = `${environment.baseUrl}/todos/`;
+  users_url: string = `${environment.baseUrl}/users/`;
 
   constructor(private http: HttpClient) {}
 
-  async loadDataFromDatabase(): Promise<any> {
+  async loadTasksFromDatabase(): Promise<any> {
     try {
-      const response = await lastValueFrom(this.http.get<any>(this.url));
+      const response = await lastValueFrom(this.http.get<any>(this.todos_url));
       return response;
-    } catch (e) {
-      console.error('Fehler beim laden der Aufgaben von der Datenbank:', e);
+    } catch (error) {
+      console.error('Fehler beim laden der Aufgaben von der Datenbank:', error);
       return [];
     }
   }
@@ -24,32 +25,44 @@ export class DatabaseService {
   async saveTaskInDatabase(taskData: any): Promise<any> {
     try {
       const response = await lastValueFrom(
-        this.http.post<any>(this.url, taskData)
+        this.http.post<any>(this.todos_url, taskData)
       );
       return response;
-    } catch (e) {
-      console.error('Fehler beim Speichern der Aufgabe in der Datenbank:', e);
-      throw e; // Fehler weiterwerfen, damit er in der aufrufenden Methode behandelt wird
+    } catch (error) {
+      console.error(
+        'Fehler beim Speichern der Aufgabe in der Datenbank:',
+        error
+      );
+      throw error; // Fehler weiterwerfen, damit er in der aufrufenden Methode behandelt wird
     }
   }
 
   async updateTaskInDatabase(taskData: any): Promise<void> {
     try {
       await lastValueFrom(
-        this.http.patch(`${this.url}${taskData.id}/`, taskData)
+        this.http.patch(`${this.todos_url}${taskData.id}/`, taskData)
       );
-    } catch (e) {
-      console.error('Fehler beim updaten der Aufgabe in der Datenbank:', e);
+    } catch (error) {
+      console.error('Fehler beim updaten der Aufgabe in der Datenbank:', error);
     }
   }
 
   async deleteTaskInDatabase(taskData: any): Promise<void> {
     try {
       await lastValueFrom(
-        this.http.delete(`${this.url}${taskData.id}/`, { body: taskData })
+        this.http.delete(`${this.todos_url}${taskData.id}/`, { body: taskData })
       );
-    } catch (e) {
-      console.error('Fehler beim löschen der Aufgabe in der Datenbank:', e);
+    } catch (error) {
+      console.error('Fehler beim löschen der Aufgabe in der Datenbank:', error);
+    }
+  }
+
+  async loadUsersFromDatabase(): Promise<any> {
+    try {
+      const response = await lastValueFrom(this.http.get<any>(this.users_url));
+      return response;
+    } catch (error) {
+      console.error('Fehler beim laden der Users von der Datenbank:', error);
     }
   }
 }

@@ -35,4 +35,16 @@ h1 {
       letter-spacing: 0;
     }
   }
+
+  .welcome-section {
+    position: absolute;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 20px;
+
+    p {
+      margin: 0;
+    }
+  }
 }
