@@ -40,17 +40,17 @@ export class AuthService {
       );
       localStorage.setItem('authToken', response.token);
       localStorage.setItem('firstName', response.first_name);
-      this.router.navigateByUrl('/dashboard');
+      return response;
     } catch (error) {
       console.error('Registration error', error);
-      throw new Error('Registration failed. Please try again.');
+      throw error;
     }
   }
 
   public async loginWithUsernameAndPassword(
     username: string,
     password: string
-  ): Promise<void> {
+  ): Promise<any> {
     const url = `${environment.baseUrl}/auth/login/`;
     const body = { username, password };
     const headers = { 'Content-Type': 'application/json' };
@@ -61,7 +61,7 @@ export class AuthService {
       );
       localStorage.setItem('authToken', response.token);
       localStorage.setItem('firstName', response.first_name);
-      this.router.navigateByUrl('/dashboard');
+      return response;
     } catch (error) {
       console.error('Login failed', error);
       throw new Error('Login failed. Please try again later.');

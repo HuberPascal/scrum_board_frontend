@@ -17,6 +17,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
+import { HttpErrorResponse } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -60,7 +62,8 @@ export class RegisterComponent implements OnInit {
 
   constructor(
     private authService: AuthService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private router: Router
   ) {}
   ngOnInit(): void {
     this.initializeForm();
@@ -120,6 +123,7 @@ export class RegisterComponent implements OnInit {
 
   async userRegister() {
     this.loading = true;
+    this.errorMessage = '';
 
     try {
       await this.authService.registerWithUsernameAndPassword(
@@ -129,11 +133,24 @@ export class RegisterComponent implements OnInit {
         this.form.value.email,
         this.form.value.password
       );
-      this.loading = false;
+      this.router.navigateByUrl('/dashboard');
     } catch (error) {
-      console.error(error);
-      this.errorMessage = 'Enter a valid email address';
       this.loading = false;
+      if (error instanceof HttpErrorResponse) {
+        console.error('Registration failed', error);
+        if (error.status === 400) {
+          this.errorMessage =
+            'Registration failed: Invalid input. Please check your details.';
+        } else if (error.status === 401) {
+          this.errorMessage = 'Registration failed: Unauthorized access.';
+        } else {
+          this.errorMessage = 'Registration failed: Please try again later.';
+        }
+      } else {
+        console.error('An unexpected error occurred', error);
+        this.errorMessage =
+          'An unexpected error occurred. Please try again later.';
+      }
     }
   }
 
