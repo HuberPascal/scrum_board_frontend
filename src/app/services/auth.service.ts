@@ -11,6 +11,14 @@ interface AuthResponse {
   first_name: string;
 }
 
+interface RegisterResponse {
+  message: string;
+  token: string;
+  user_id: number;
+  email: string;
+  first_name: string;
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -25,6 +33,7 @@ export class AuthService {
     password: string
   ): Promise<any> {
     const url = `${environment.baseUrl}/auth/register/`;
+
     const body = {
       first_name: firstName,
       last_name: lastName,
@@ -33,10 +42,11 @@ export class AuthService {
       password,
     };
     const headers = { 'Content-Type': 'application/json' };
+    console.log(body);
 
     try {
       const response = await lastValueFrom(
-        this.http.post<AuthResponse>(url, body, { headers })
+        this.http.post<RegisterResponse>(url, body, { headers })
       );
       localStorage.setItem('authToken', response.token);
       localStorage.setItem('firstName', response.first_name);
