@@ -25,36 +25,64 @@ interface RegisterResponse {
 export class AuthService {
   constructor(private http: HttpClient, private router: Router) {}
 
-  public async registerWithUsernameAndPassword(
+  private createRequestBody(
     firstName: string,
     lastName: string,
     username: string,
     email: string,
     password: string
-  ): Promise<any> {
-    const url = `${environment.baseUrl}/auth/register/`;
-
-    const body = {
+  ) {
+    return {
       first_name: firstName,
       last_name: lastName,
       username,
       email,
       password,
     };
+  }
+
+  private async sendRegistrationRequest(body: any): Promise<RegisterResponse> {
+    const url = `${environment.baseUrl}/auth/register/`;
     const headers = { 'Content-Type': 'application/json' };
-    console.log(body);
+
+    return lastValueFrom(
+      this.http.post<RegisterResponse>(url, body, { headers })
+    );
+  }
+
+  private saveAuthData(response: RegisterResponse) {
+    localStorage.setItem('authToken', response.token);
+    localStorage.setItem('firstName', response.first_name);
+  }
+
+  public async registerWithUsernameAndPassword(
+    firstName: string,
+    lastName: string,
+    username: string,
+    email: string,
+    password: string
+  ): Promise<RegisterResponse> {
+    const body = this.createRequestBody(
+      firstName,
+      lastName,
+      username,
+      email,
+      password
+    );
 
     try {
-      const response = await lastValueFrom(
-        this.http.post<RegisterResponse>(url, body, { headers })
-      );
-      localStorage.setItem('authToken', response.token);
-      localStorage.setItem('firstName', response.first_name);
+      const response = await this.sendRegistrationRequest(body);
+      this.saveAuthData(response);
       return response;
     } catch (error) {
       console.error('Registration error', error);
       throw error;
     }
+  }
+
+  private saveAuthDataLogin(response: AuthResponse) {
+    localStorage.setItem('authToken', response.token);
+    localStorage.setItem('firstName', response.first_name);
   }
 
   public async loginWithUsernameAndPassword(
@@ -69,8 +97,7 @@ export class AuthService {
       const response = await lastValueFrom(
         this.http.post<AuthResponse>(url, body, { headers })
       );
-      localStorage.setItem('authToken', response.token);
-      localStorage.setItem('firstName', response.first_name);
+      this.saveAuthDataLogin(response);
       return response;
     } catch (error) {
       console.error('Login failed', error);
