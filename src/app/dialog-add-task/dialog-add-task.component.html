@@ -23,33 +23,41 @@
           />
           <!-- <mat-hint>Please enter a name</mat-hint> -->
         </mat-form-field>
-      </div>
 
-      <div class="tag-container">
-        <div class="color-box" [ngClass]="selectedColorValue"></div>
-        <mat-form-field appearance="outline">
-          <mat-label>Color</mat-label>
-          <mat-select [(ngModel)]="selectedColorValue" name="tag">
-            @for (tag of tags; track tag) {
-            <mat-option [value]="tag.value"
-              ><span [class]="tag.pointClass" class="point"></span
-              >{{ tag.viewValue }}</mat-option
-            >
-            }
-          </mat-select>
-        </mat-form-field>
+        <div class="member-container">
+          <mat-form-field appearance="outline">
+            <mat-label>Members</mat-label>
+            <mat-select name="member" [(ngModel)]="selectedMembers" multiple>
+              @for (member of users; track member) {
+              <mat-option [value]="member">
+                {{ member.first_name }} {{ member.last_name }}
+              </mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+        </div>
       </div>
+    </div>
+
+    <div class="tag-container">
+      <div class="color-box" [ngClass]="selectedColorValue"></div>
+      <mat-form-field appearance="outline">
+        <mat-label>Color</mat-label>
+        <mat-select [(ngModel)]="selectedColorValue" name="tag">
+          @for (tag of tags; track tag) {
+          <mat-option [value]="tag.value"
+            ><span [class]="tag.pointClass" class="point"></span
+            >{{ tag.viewValue }}</mat-option
+          >
+          }
+        </mat-select>
+      </mat-form-field>
     </div>
   </div>
 </div>
 <div mat-dialog-actions [ngClass]="selectedColorValue">
   <button (click)="dialogRef.close()" mat-button>Cancel</button>
-  <button
-    [disabled]="taskName.trim() == ''"
-    (click)="saveTask()"
-    mat-button
-    cdkFocusInitial
-  >
+  <button [disabled]="taskName.trim() == ''" (click)="saveTask()" mat-button>
     Save
   </button>
 </div>

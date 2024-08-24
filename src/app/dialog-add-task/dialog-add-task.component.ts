@@ -13,35 +13,13 @@ import {
 } from '@angular/material/dialog';
 import { MatDialogRef } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
-import { environment } from '../../environments/environment';
-import { lastValueFrom } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
 import { MatSelectModule } from '@angular/material/select';
-import { BrowserModule } from '@angular/platform-browser';
 import { DatabaseService } from '../services/database.service';
-
-interface Priority {
-  value: string;
-  viewValue: string;
-}
 
 interface Tags {
   value: string;
   viewValue: string;
   pointClass: string;
-}
-
-interface Member {
-  id: number;
-  first_name: string;
-  last_name: string;
-  initials: string;
-}
-
-interface Users {
-  firstName: string;
-  lastName: string;
-  userLetters: string;
 }
 
 @Component({
@@ -70,6 +48,7 @@ export class DialogAddTaskComponent implements OnInit {
   taskDescription: string = '';
   selectedColorValue: string = 'yellow';
   taskType: string = '';
+  selectedMembers: any[] = [];
 
   tags: Tags[] = [
     { value: 'yellow', viewValue: 'Yellow', pointClass: 'point-yellow' },
@@ -81,8 +60,6 @@ export class DialogAddTaskComponent implements OnInit {
     { value: 'magenta', viewValue: 'Magenta', pointClass: 'point-magenta' },
     { value: 'cyan', viewValue: 'Cyan', pointClass: 'point-cyan' },
   ];
-
-  usersArray: Users[] = [];
 
   constructor(
     public dialogRef: MatDialogRef<DialogAddTaskComponent>,
@@ -101,6 +78,7 @@ export class DialogAddTaskComponent implements OnInit {
       author: 1,
       checked: false,
       taskType: this.taskType,
+      member_ids: this.selectedMembers.map((member) => member.id),
     };
 
     try {

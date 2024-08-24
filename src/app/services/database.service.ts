@@ -42,7 +42,6 @@ export class DatabaseService {
       const response = await lastValueFrom(
         this.http.patch(`${this.todos_url}${taskData.id}/`, taskData)
       );
-      console.log('response', response);
     } catch (error) {
       console.error('Fehler beim updaten der Aufgabe in der Datenbank:', error);
     }

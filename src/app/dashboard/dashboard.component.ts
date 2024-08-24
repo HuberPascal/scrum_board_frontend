@@ -47,7 +47,6 @@ export class DashboardComponent implements OnInit {
     this.loading = true;
     try {
       this.tasks = await this.database.loadTasksFromDatabase();
-      console.log('tasks', this.tasks);
       this.loading = false;
     } catch (error) {
       console.error(error);

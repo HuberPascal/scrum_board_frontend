@@ -48,6 +48,7 @@ export class TaskCardComponent implements OnInit {
   tagColor: string = '';
   newTitle: string = '';
   newDescription: string = '';
+  selectedMembers: any[] = [];
 
   tags: Tags[] = [
     { value: 'yellow', viewValue: 'Yellow', pointClass: 'point-yellow' },
@@ -60,8 +61,6 @@ export class TaskCardComponent implements OnInit {
     { value: 'cyan', viewValue: 'Cyan', pointClass: 'point-cyan' },
   ];
 
-  usersArray: Users[] = [];
-
   constructor(
     public dialogRef: MatDialogRef<TaskCardComponent>,
     private database: DatabaseService
@@ -71,10 +70,14 @@ export class TaskCardComponent implements OnInit {
     this.newTitle = this.task.title;
     this.newDescription = this.task.description;
     this.selectedColorValue = this.task.tags;
+    this.selectedMembers = this.task.members.map((member: { id: any }) =>
+      this.users.find((user: { id: any }) => user.id === member.id)
+    );
   }
 
   async onTagChange() {
     this.task.tags = this.selectedColorValue;
+    console.log('this.task.tags', this.task.tags);
     await this.updateTask();
     this.taskUpdated.emit();
   }
@@ -116,11 +119,13 @@ export class TaskCardComponent implements OnInit {
   }
 
   async updateTask() {
+    console.log('this.selectedColorValue', this.selectedColorValue);
     const taskData = {
       id: this.task.id,
       title: this.newTitle,
       description: this.newDescription,
       tags: this.selectedColorValue,
+      member_ids: this.selectedMembers.map((member) => member.id),
     };
 
     try {
