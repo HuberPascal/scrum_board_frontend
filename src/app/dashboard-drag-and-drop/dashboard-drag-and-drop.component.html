@@ -28,6 +28,14 @@
           {{ task.description }}
         </p>
         }
+        <div class="member-section">
+          @for (member of task.members; track member) {
+          <div class="member-circle" [ngClass]="task.tags">
+            {{ member.first_name.slice(0, 1).toUpperCase()
+            }}{{ member.last_name.slice(0, 1).toUpperCase() }}
+          </div>
+          }
+        </div>
       </mat-card>
       }
     </div>
@@ -61,6 +69,14 @@
           {{ task.description }}
         </p>
         }
+        <div class="member-section">
+          @for (member of task.members; track member) {
+          <div class="member-circle" [ngClass]="task.tags">
+            {{ member.first_name.slice(0, 1).toUpperCase()
+            }}{{ member.last_name.slice(0, 1).toUpperCase() }}
+          </div>
+          }
+        </div>
       </mat-card>
       }
     </div>
@@ -93,6 +109,14 @@
           {{ task.description }}
         </p>
         }
+        <div class="member-section">
+          @for (member of task.members; track member) {
+          <div class="member-circle" [ngClass]="task.tags">
+            {{ member.first_name.slice(0, 1).toUpperCase()
+            }}{{ member.last_name.slice(0, 1).toUpperCase() }}
+          </div>
+          }
+        </div>
       </mat-card>
       }
     </div>
@@ -125,6 +149,14 @@
           {{ task.description }}
         </p>
         }
+        <div class="member-section">
+          @for (member of task.members; track member) {
+          <div class="member-circle" [ngClass]="task.tags">
+            {{ member.first_name.slice(0, 1).toUpperCase()
+            }}{{ member.last_name.slice(0, 1).toUpperCase() }}
+          </div>
+          }
+        </div>
       </mat-card>
       }
     </div>

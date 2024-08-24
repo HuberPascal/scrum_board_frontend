@@ -176,3 +176,20 @@ mat-card {
 .title-container-blue {
   background-color: #89e2f4;
 }
+
+.member-section {
+  display: flex;
+  gap: 5px;
+
+  .member-circle {
+    width: 20px;
+    height: 20px;
+    background-color: #fff !important;
+    border-radius: 50%;
+    padding: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #3477db;
+  }
+}
