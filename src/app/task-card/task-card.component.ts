@@ -77,7 +77,6 @@ export class TaskCardComponent implements OnInit {
 
   async onTagChange() {
     this.task.tags = this.selectedColorValue;
-    console.log('this.task.tags', this.task.tags);
     await this.updateTask();
     this.taskUpdated.emit();
   }
@@ -119,7 +118,6 @@ export class TaskCardComponent implements OnInit {
   }
 
   async updateTask() {
-    console.log('this.selectedColorValue', this.selectedColorValue);
     const taskData = {
       id: this.task.id,
       title: this.newTitle,
