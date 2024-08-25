@@ -9,6 +9,7 @@ import { HttpClient } from '@angular/common/http';
 export class DatabaseService {
   todos_url: string = `${environment.baseUrl}/todos/`;
   users_url: string = `${environment.baseUrl}/users/`;
+  contacts_url: string = `${environment.baseUrl}/contacts/`;
 
   constructor(private http: HttpClient) {}
 
@@ -63,6 +64,32 @@ export class DatabaseService {
       return response;
     } catch (error) {
       console.error('Fehler beim laden der Users von der Datenbank:', error);
+    }
+  }
+
+  async saveContactInDatabase(contactData: any): Promise<any> {
+    try {
+      const response = await lastValueFrom(
+        this.http.post<any>(this.contacts_url, contactData)
+      );
+      return response;
+    } catch (error) {
+      console.error(
+        'Fehler beim speichern der Kontakte in der Datenbank:',
+        error
+      );
+      throw error;
+    }
+  }
+
+  async loadContacts() {
+    try {
+      const response = await lastValueFrom(
+        this.http.get<any>(this.contacts_url)
+      );
+      return response;
+    } catch (error) {
+      console.error('Fehler beim laden der Kontakte von der Datenbank:', error);
     }
   }
 }

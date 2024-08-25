@@ -86,8 +86,8 @@ export class DialogAddTaskComponent implements OnInit {
       this.taskCreated.emit(savedTask);
 
       this.dialogRef.close();
-    } catch (e) {
-      console.error('Fehler beim Speichern der Aufgabe:', e);
+    } catch (error) {
+      console.error('Fehler beim Speichern der Aufgabe:', error);
     }
   }
 

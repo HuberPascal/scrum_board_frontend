@@ -7,6 +7,7 @@ import { DatabaseService } from '../services/database.service';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
+import { DialogAddContactComponent } from '../dialog-add-contact/dialog-add-contact.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -72,6 +73,10 @@ export class DashboardComponent implements OnInit {
     dialogRef.componentInstance.taskCreated.subscribe((newTask: any) => {
       this.onTaskCreated(newTask);
     });
+  }
+
+  openDialogContact() {
+    const dialogRef = this.dialog.open(DialogAddContactComponent);
   }
 
   onTaskCreated(newTask: any) {

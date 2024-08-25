@@ -1,0 +1,19 @@
+.contact-card {
+  display: flex;
+  flex-direction: column;
+  padding-top: 5px;
+}
+
+.alert {
+  color: #f44336;
+  font-size: 12px;
+}
+
+.error-container {
+  height: 12px;
+  margin-bottom: 1rem;
+}
+
+.dialog-container {
+  width: 330px;
+}

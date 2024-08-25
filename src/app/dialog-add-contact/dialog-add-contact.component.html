@@ -1,0 +1,51 @@
+<div class="dialog-container">
+  <h1 mat-dialog-title>Add Contact</h1>
+  <div mat-dialog-content>
+    <div class="pt-6 contact-card">
+      <mat-form-field appearance="outline">
+        <mat-label>First Name</mat-label>
+        <input
+          [(ngModel)]="firstName"
+          matInput
+          placeholder="First Name"
+          required
+        />
+        <!-- <mat-hint>Please enter a name</mat-hint> -->
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Last Name</mat-label>
+        <input
+          [(ngModel)]="lastName"
+          matInput
+          placeholder="Last Name"
+          required
+        />
+        <!-- <mat-hint>Please enter a name</mat-hint> -->
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Email</mat-label>
+        <input [(ngModel)]="email" matInput placeholder="Email" required />
+        <!-- <mat-hint>Please enter a name</mat-hint> -->
+      </mat-form-field>
+    </div>
+    <div class="error-container">
+      @if (errorMessage) {
+      <div class="alert error-container">{{ errorMessage }}</div>
+      }
+    </div>
+  </div>
+  <div mat-dialog-actions>
+    <button (click)="dialogRef.close()" mat-button>Cancel</button>
+    <button
+      [disabled]="
+        firstName.trim() === '' || lastName.trim() === '' || email.trim() === ''
+      "
+      (click)="saveContact()"
+      mat-button
+    >
+      Save
+    </button>
+  </div>
+</div>
