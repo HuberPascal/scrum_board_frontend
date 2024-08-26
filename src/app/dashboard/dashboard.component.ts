@@ -8,6 +8,8 @@ import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { DialogAddContactComponent } from '../dialog-add-contact/dialog-add-contact.component';
+import { DialogEditContactsComponent } from '../dialog-edit-contacts/dialog-edit-contacts.component';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({
   selector: 'app-dashboard',
@@ -17,6 +19,7 @@ import { DialogAddContactComponent } from '../dialog-add-contact/dialog-add-cont
     MatDialogModule,
     DashboardDragAndDropComponent,
     MatIconModule,
+    MatTooltipModule,
   ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss',
@@ -77,6 +80,10 @@ export class DashboardComponent implements OnInit {
 
   openDialogContact() {
     const dialogRef = this.dialog.open(DialogAddContactComponent);
+  }
+
+  openDialogEditContacts() {
+    const dialogRef = this.dialog.open(DialogEditContactsComponent);
   }
 
   onTaskCreated(newTask: any) {

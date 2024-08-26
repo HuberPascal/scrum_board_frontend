@@ -16,6 +16,7 @@ export class DatabaseService {
   async loadTasksFromDatabase(): Promise<any> {
     try {
       const response = await lastValueFrom(this.http.get<any>(this.todos_url));
+      console.log('response', response);
       return response;
     } catch (error) {
       console.error('Fehler beim laden der Aufgaben von der Datenbank:', error);
@@ -90,6 +91,32 @@ export class DatabaseService {
       return response;
     } catch (error) {
       console.error('Fehler beim laden der Kontakte von der Datenbank:', error);
+    }
+  }
+
+  async deleteContact(id: number): Promise<void> {
+    try {
+      const response = await lastValueFrom(
+        this.http.delete<any>(`${this.contacts_url}${id}/`)
+      );
+    } catch (error) {
+      console.error(
+        'Fehler beim löschen des Kontakts in der Datenbank:',
+        error
+      );
+    }
+  }
+
+  async updateContactInDatabase(contactData: any): Promise<void> {
+    try {
+      const response = await lastValueFrom(
+        this.http.patch(`${this.contacts_url}${contactData.id}/`, contactData)
+      );
+    } catch (error) {
+      console.error(
+        'Fehler beim updaten des Kontakts in der Datenbank:',
+        error
+      );
     }
   }
 }

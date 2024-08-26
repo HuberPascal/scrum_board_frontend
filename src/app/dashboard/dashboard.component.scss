@@ -15,6 +15,7 @@ h1 {
   color: #527cff;
   text-shadow: -1px -1px 0 #3338b6, 1px -1px 0 #3338b6, -1px 1px 0 #3338b6,
     1px 1px 0 #3338b6;
+  margin-bottom: 10px;
 }
 
 .headline {
@@ -47,4 +48,22 @@ h1 {
       margin: 0;
     }
   }
+}
+
+.add-contact-btn {
+  width: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+  border: none;
+  padding: 5px 10px;
+  background-color: #479749;
+}
+
+.contacts {
+  display: flex;
+  gap: 10px;
+  margin-left: 20px;
+  margin-bottom: 10px;
 }

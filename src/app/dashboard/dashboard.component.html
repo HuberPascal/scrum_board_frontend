@@ -4,13 +4,28 @@
     <div class="welcome-section">
       <p>Hello, {{ firstName }}! Ready to manage your tasks today?</p>
     </div>
-    <button (click)="openDialogContact()">
-      <mat-icon>logout</mat-icon>
-      <span>Add Contact</span>
-    </button>
+
     <button (click)="logout()" class="logout btn btn-primary">
       <mat-icon>logout</mat-icon>
       <span>Logout</span>
+    </button>
+  </div>
+  <div class="contacts">
+    <button
+      class="add-contact-btn btn"
+      (click)="openDialogContact()"
+      matTooltip="Add a new contact"
+    >
+      <mat-icon>add</mat-icon>
+      <!-- <span>Add Contact</span> -->
+    </button>
+    <button
+      class="add-contact-btn btn"
+      (click)="openDialogEditContacts()"
+      matTooltip="View all contacts"
+    >
+      <mat-icon>contacts</mat-icon>
+      <!-- <span>All Contacts</span> -->
     </button>
   </div>
 
