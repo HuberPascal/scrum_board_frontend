@@ -39,6 +39,7 @@ export class TaskCardComponent implements OnInit {
   @Output() taskUpdated = new EventEmitter<void>();
   @Input() task: any;
   @Input() users: any;
+  @Input() contacts: any;
   title: boolean = true;
   textAreaTitle: boolean = false;
   textAreaDescription: boolean = false;
@@ -49,6 +50,7 @@ export class TaskCardComponent implements OnInit {
   newTitle: string = '';
   newDescription: string = '';
   selectedMembers: any[] = [];
+  empty: string = 'dsf';
 
   tags: Tags[] = [
     { value: 'yellow', viewValue: 'Yellow', pointClass: 'point-yellow' },
@@ -71,7 +73,7 @@ export class TaskCardComponent implements OnInit {
     this.newDescription = this.task.description;
     this.selectedColorValue = this.task.tags;
     this.selectedMembers = this.task.members.map((member: { id: any }) =>
-      this.users.find((user: { id: any }) => user.id === member.id)
+      this.contacts.find((user: { id: any }) => user.id === member.id)
     );
   }
 
@@ -118,6 +120,7 @@ export class TaskCardComponent implements OnInit {
   }
 
   async updateTask() {
+    console.log(this.selectedMembers.map((member) => member.id));
     const taskData = {
       id: this.task.id,
       title: this.newTitle,

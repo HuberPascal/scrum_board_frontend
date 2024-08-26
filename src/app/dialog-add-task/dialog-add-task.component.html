@@ -26,11 +26,11 @@
 
         <div class="member-container">
           <mat-form-field appearance="outline">
-            <mat-label>Members</mat-label>
-            <mat-select name="member" [(ngModel)]="selectedMembers" multiple>
-              @for (member of users; track member) {
-              <mat-option [value]="member">
-                {{ member.first_name }} {{ member.last_name }}
+            <mat-label>Contacts</mat-label>
+            <mat-select name="contacts" [(ngModel)]="selectedMembers" multiple>
+              @for (contact of contacts; track contact) {
+              <mat-option [value]="contact">
+                {{ contact.first_name }} {{ contact.last_name }}
               </mat-option>
               }
             </mat-select>

@@ -45,6 +45,7 @@ export class DashboardDragAndDropComponent implements OnInit, OnChanges {
 
   @Input() tasks: any[] = [];
   @Input() users: any[] = [];
+  @Input() contacts: any[] = [];
   @Output() openDialogAddTask: EventEmitter<string> = new EventEmitter();
   @Output() taskDeleted = new EventEmitter<number>();
   @Output() reloadTasks = new EventEmitter<void>();
@@ -75,6 +76,7 @@ export class DashboardDragAndDropComponent implements OnInit, OnChanges {
     const dialogRef = this.dialog.open(TaskCardComponent);
     dialogRef.componentInstance.task = task;
     dialogRef.componentInstance.users = this.users;
+    dialogRef.componentInstance.contacts = this.contacts;
 
     dialogRef.componentInstance.taskDeleted.subscribe((taskId: number) => {
       this.onTaskDeleted(taskId);

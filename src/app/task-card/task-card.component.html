@@ -64,10 +64,11 @@
         [(ngModel)]="selectedMembers"
         (ngModelChange)="onTagChange()"
         multiple
+        placeholder="Add Contacts"
       >
-        @for (user of users; track user.id) {
-        <mat-option [value]="user">
-          {{ user.first_name }} {{ user.last_name }}
+        @for (contact of contacts; track contact.id) {
+        <mat-option [value]="contact">
+          {{ contact.first_name }} {{ contact.last_name }}
         </mat-option>
         }
       </mat-select>

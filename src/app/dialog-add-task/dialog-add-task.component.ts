@@ -44,6 +44,7 @@ interface Tags {
 export class DialogAddTaskComponent implements OnInit {
   @Output() taskCreated = new EventEmitter<any>();
   users: any[] = [];
+  contacts: any[] = [];
   taskName: string = '';
   taskDescription: string = '';
   selectedColorValue: string = 'yellow';
@@ -80,12 +81,13 @@ export class DialogAddTaskComponent implements OnInit {
       taskType: this.taskType,
       member_ids: this.selectedMembers.map((member) => member.id),
     };
+    console.log('taskData', taskData);
 
     try {
       const savedTask = await this.database.saveTaskInDatabase(taskData);
       this.taskCreated.emit(savedTask);
 
-      this.dialogRef.close();
+      this.dialogRef.close(true);
     } catch (error) {
       console.error('Fehler beim Speichern der Aufgabe:', error);
     }

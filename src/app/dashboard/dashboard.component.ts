@@ -28,6 +28,7 @@ export class DashboardComponent implements OnInit {
   readonly dialog = inject(MatDialog);
   tasks: any[] = [];
   users: any[] = [];
+  contacts: any = [];
   loading: boolean = false;
   firstName: string = '';
 
@@ -41,6 +42,7 @@ export class DashboardComponent implements OnInit {
     if (this.authService.isAuthenticated()) {
       this.loadTasks();
       this.loadUsers();
+      this.loadContacts();
       this.firstName = localStorage.getItem('firstName') || '';
     } else {
       this.router.navigate(['/login']);
@@ -65,6 +67,15 @@ export class DashboardComponent implements OnInit {
     }
   }
 
+  async loadContacts() {
+    try {
+      this.contacts = await this.database.loadContacts();
+      console.log('contacts', this.contacts);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   onTaskDeleted(taskId: number) {
     this.tasks = this.tasks.filter((task) => task.id !== taskId);
   }
@@ -72,6 +83,7 @@ export class DashboardComponent implements OnInit {
   openDialogAddTask(taskType: string) {
     const dialogRef = this.dialog.open(DialogAddTaskComponent);
     dialogRef.componentInstance.taskType = taskType;
+    dialogRef.componentInstance.contacts = this.contacts;
 
     dialogRef.componentInstance.taskCreated.subscribe((newTask: any) => {
       this.onTaskCreated(newTask);
@@ -80,10 +92,22 @@ export class DashboardComponent implements OnInit {
 
   openDialogContact() {
     const dialogRef = this.dialog.open(DialogAddContactComponent);
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        console.log('test');
+        this.loadContacts(); // Aktualisiere die Aufgabenliste nach dem Hinzufügen eines neuen Kontakts
+      }
+    });
   }
 
   openDialogEditContacts() {
     const dialogRef = this.dialog.open(DialogEditContactsComponent);
+
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log('DialogEditContactsComponent');
+      this.loadContacts();
+    });
   }
 
   onTaskCreated(newTask: any) {

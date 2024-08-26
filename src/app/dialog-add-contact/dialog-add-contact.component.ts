@@ -61,7 +61,7 @@ export class DialogAddContactComponent implements OnInit {
 
       try {
         await this.database.saveContactInDatabase(contactData);
-        this.dialogRef.close();
+        this.dialogRef.close(true);
       } catch (error) {
         console.error('Fehler beim Speichern des Kontakts:', error);
       }

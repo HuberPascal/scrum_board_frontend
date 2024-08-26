@@ -29,10 +29,10 @@
         </p>
         }
         <div class="member-section">
-          @for (member of task.members; track member.id) {
+          @for (contact of task.members; track contact.id) {
           <div class="member-circle" [ngClass]="task.tags">
-            {{ member.first_name.charAt(0).toUpperCase()
-            }}{{ member.last_name.charAt(0).toUpperCase() }}
+            {{ contact.first_name.charAt(0).toUpperCase()
+            }}{{ contact.last_name.charAt(0).toUpperCase() }}
           </div>
           }
         </div>
@@ -70,10 +70,10 @@
         </p>
         }
         <div class="member-section">
-          @for (member of task.members; track member.id) {
+          @for (contact of task.members; track contact.id) {
           <div class="member-circle" [ngClass]="task.tags">
-            {{ member.first_name.slice(0, 1).toUpperCase()
-            }}{{ member.last_name.slice(0, 1).toUpperCase() }}
+            {{ contact.first_name.slice(0, 1).toUpperCase()
+            }}{{ contact.last_name.slice(0, 1).toUpperCase() }}
           </div>
           }
         </div>
@@ -110,10 +110,10 @@
         </p>
         }
         <div class="member-section">
-          @for (member of task.members; track member.id) {
+          @for (contact of task.members; track contact.id) {
           <div class="member-circle" [ngClass]="task.tags">
-            {{ member.first_name.slice(0, 1).toUpperCase()
-            }}{{ member.last_name.slice(0, 1).toUpperCase() }}
+            {{ contact.first_name.slice(0, 1).toUpperCase()
+            }}{{ contact.last_name.slice(0, 1).toUpperCase() }}
           </div>
           }
         </div>
@@ -150,10 +150,10 @@
         </p>
         }
         <div class="member-section">
-          @for (member of task.members; track member.id) {
+          @for (contact of task.members; track contact.id) {
           <div class="member-circle" [ngClass]="task.tags">
-            {{ member.first_name.slice(0, 1).toUpperCase()
-            }}{{ member.last_name.slice(0, 1).toUpperCase() }}
+            {{ contact.first_name.slice(0, 1).toUpperCase()
+            }}{{ contact.last_name.slice(0, 1).toUpperCase() }}
           </div>
           }
         </div>
