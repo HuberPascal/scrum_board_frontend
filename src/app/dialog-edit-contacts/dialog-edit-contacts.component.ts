@@ -39,7 +39,6 @@ export class DialogEditContactsComponent implements OnInit {
 
   async loadContacts() {
     this.contacts = await this.database.loadContacts();
-    console.log('contacts', this.contacts);
   }
 
   editContact(id: number) {
@@ -49,16 +48,12 @@ export class DialogEditContactsComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(async (result) => {
       if (result) {
-        console.log('fewfeqwfwg');
         this.contacts = await this.database.loadContacts();
       }
     });
-
-    console.log('data', contactData);
   }
 
   async deleteContact(id: number) {
-    console.log('id', id);
     try {
       await this.database.deleteContact(id);
       this.contacts = await this.database.loadContacts();

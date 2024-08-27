@@ -81,7 +81,6 @@ export class DialogAddTaskComponent implements OnInit {
       taskType: this.taskType,
       member_ids: this.selectedMembers.map((member) => member.id),
     };
-    console.log('taskData', taskData);
 
     try {
       const savedTask = await this.database.saveTaskInDatabase(taskData);

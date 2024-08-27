@@ -48,7 +48,6 @@ export class DialogAddContactComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     this.contacts = await this.database.loadContacts();
-    console.log('contacts', this.contacts);
   }
 
   async saveContact() {

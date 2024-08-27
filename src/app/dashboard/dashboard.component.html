@@ -11,6 +11,12 @@
     </button>
   </div>
   <div class="contacts">
+    <div class="member-section">
+      <div class="member-circle">
+        {{ firstName.charAt(0).toUpperCase()
+        }}{{ lastName.charAt(0).toUpperCase() }}
+      </div>
+    </div>
     <button
       class="add-contact-btn btn"
       (click)="openDialogContact()"

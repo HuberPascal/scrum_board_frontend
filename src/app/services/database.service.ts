@@ -16,7 +16,6 @@ export class DatabaseService {
   async loadTasksFromDatabase(): Promise<any> {
     try {
       const response = await lastValueFrom(this.http.get<any>(this.todos_url));
-      console.log('response', response);
       return response;
     } catch (error) {
       console.error('Fehler beim laden der Aufgaben von der Datenbank:', error);

@@ -9,6 +9,7 @@ interface AuthResponse {
   user_id: number;
   email: string;
   first_name: string;
+  last_name: string;
 }
 
 interface RegisterResponse {
@@ -17,6 +18,7 @@ interface RegisterResponse {
   user_id: number;
   email: string;
   first_name: string;
+  last_name: string;
 }
 
 @Injectable({
@@ -53,6 +55,7 @@ export class AuthService {
   private saveAuthData(response: RegisterResponse) {
     localStorage.setItem('authToken', response.token);
     localStorage.setItem('firstName', response.first_name);
+    localStorage.setItem('lastName', response.last_name);
   }
 
   public async registerWithUsernameAndPassword(
@@ -71,6 +74,7 @@ export class AuthService {
     );
 
     try {
+      localStorage.removeItem('authToken');
       const response = await this.sendRegistrationRequest(body);
       this.saveAuthData(response);
       return response;
@@ -83,6 +87,7 @@ export class AuthService {
   private saveAuthDataLogin(response: AuthResponse) {
     localStorage.setItem('authToken', response.token);
     localStorage.setItem('firstName', response.first_name);
+    localStorage.setItem('lastName', response.last_name);
   }
 
   public async loginWithUsernameAndPassword(
@@ -94,9 +99,11 @@ export class AuthService {
     const headers = { 'Content-Type': 'application/json' };
 
     try {
+      localStorage.removeItem('authToken');
       const response = await lastValueFrom(
         this.http.post<AuthResponse>(url, body, { headers })
       );
+      console.log(response);
       this.saveAuthDataLogin(response);
       return response;
     } catch (error) {
@@ -117,6 +124,7 @@ export class AuthService {
   public logout(): void {
     localStorage.removeItem('authToken');
     localStorage.removeItem('firstName');
-    this.router.navigate(['/login']); // Weiterleitung zur Login-Seite
+    localStorage.removeItem('lastName');
+    this.router.navigate(['/login']);
   }
 }

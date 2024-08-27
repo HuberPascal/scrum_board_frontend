@@ -120,7 +120,6 @@ export class TaskCardComponent implements OnInit {
   }
 
   async updateTask() {
-    console.log(this.selectedMembers.map((member) => member.id));
     const taskData = {
       id: this.task.id,
       title: this.newTitle,
